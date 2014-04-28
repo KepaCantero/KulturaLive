@@ -1,4 +1,4 @@
-var MemoryAdapter = function() {
+ar MemoryAdapter = function() {
 
     this.initialize = function() {
         // No Initialization required

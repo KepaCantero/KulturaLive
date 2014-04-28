@@ -5,18 +5,35 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
     <link href="assets/css/styles.css" rel="stylesheet">
     <link href="assets/css/kulturalive.css" rel="stylesheet">
+     <link href="assets/css/mainMenu.css" rel="stylesheet">
     <link href="assets/topcoat/css/topcoat-mobile-light.css" rel="stylesheet">
     <link href="assets/css/pageslider.css" rel="stylesheet">
 </head>
 
-<body>
+<body id="home">
 
-	<script id="home-tpl" type="text/x-handlebars-template">
-	    <div class="topcoat-navigation-bar-kometa">
+	<div id="initialPage" > 
+      
+                <ul class="ui-listview">
+					<li class="btn_a"><a href="#concerts/0" >ENTRADAS</a></li>
+		            <li class="btn_s"><a href="#concerts/0" >SALAS</a></li>
+				    <li class="btn_l"><a href="#concerts/0" >NOTICIAS</a></li>
+					<li class="btn_c"><a href="#concerts/0" >AYUDA</a></li>
+				</ul>                
+            
+      
+    </div>
+    
+    
+    
+    <script id="home-tpl" type="text/x-handlebars-template">
+	    <div class="topcoat-navigation-bar-kometa" data-add-back-btn="true">
 	        <div class="topcoat-navigation-bar__title-kometa center full">
 	            <h1>CONCIERTOS</h1>
 	        </div>
-	    </div>
+	    
+            
+        </div>
 	    <div class="search-bar">
 	        <input type="search" placeholder="Buscar" class="topcoat-search-input search-key">
 	    </div>
@@ -26,21 +43,6 @@
 	    </div>
 	</script>
 	
-	<!--<li class="topcoat-list__item">
-        <a href="#concerts/{{id}}">
-            {{#if pic}}
-            	<img src="assets/pics/{{pic}}">
-            {{else}}
-            	<img src="assets/pics/no_disponible.jpg">
-            {{/if}}
-            <p>{{bandName}}</p>
-            <p>{{date}}</p>
-        </a>
-    </li>-->
-	
-	<!--<a target="_blank" href="http://www.bermeokokafeantzokia.com">
-	    BERMEOKO KAFE ANTZOKIA (Bermeo-Bizkaia)
-	</a>-->
 	
 	<script id="employee-li-tpl" type="text/x-handlebars-template">
 	    {{#.}}

@@ -6,7 +6,8 @@
 	var employeeLiTpl = Handlebars.compile($("#employee-li-tpl").html());
 	var employeeTpl = Handlebars.compile($("#employee-tpl").html());
 	var detailsURL = /^#concerts\/(\d{1,})/;
-    
+    var mainList =  /^#concerts\/(\d{0})/;
+    var homeApp = $( "initialPage" );
     var adapter = new WebSqlAdapter();
    
     var slider = new PageSlider($('body'));
@@ -38,14 +39,29 @@
    
    function route() {
 	    var hash = window.location.hash;
-	    if (!hash) {
+        	   
+     
+       //launch the initial page
+       
+       if (!hash) {
+	        slider.slidePage(homeApp);
+	        //Esto deberï¿½a cargar todos los conciertos al cargar HomeView, pero no, da error en la transacciï¿½n sql
+	        return;
+	    }
+       
+       
+       var match = hash.match(mainList);
+       if (match) {
 	        slider.slidePage(new HomeView(adapter, homeTpl, employeeLiTpl).render().el);
-	        //Esto debería cargar todos los conciertos al cargar HomeView, pero no, da error en la transacción sql
+	        //Esto deberï¿½a cargar todos los conciertos al cargar HomeView, pero no, da error en la transacciï¿½n sql
 	        adapter.findByName($('.search-key').val()).done(function(concerts) {
 	            $('.employee-list').html(employeeLiTpl(concerts));
 	        });
 	        return;
 	    }
+       
+       
+       
 	    var match = hash.match(detailsURL);
 	    if (match) {
 	        adapter.findById(Number(match[1])).done(function(concerts) {

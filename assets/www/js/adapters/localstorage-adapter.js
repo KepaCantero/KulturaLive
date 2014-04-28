@@ -1,4 +1,4 @@
-var LocalStorageAdapter = function () {
+ar LocalStorageAdapter = function () {
 
     this.initialize = function() {
         var deferred = $.Deferred();
