@@ -2,6 +2,7 @@
 (function () {
 	
     /* ---------------------------------- Local Variables ---------------------------------- */
+    var homeListTpl = Handlebars.compile($("#homeList-tpl").html());
     var homeTpl = Handlebars.compile($("#home-tpl").html());
 	var employeeLiTpl = Handlebars.compile($("#employee-li-tpl").html());
 	var employeeTpl = Handlebars.compile($("#employee-tpl").html());
@@ -44,7 +45,7 @@
        //launch the initial page
        
        if (!hash) {
-	        slider.slidePage(homeApp);
+	        slider.slidePage(new HomeMenuView(homeTpl).render().el);
 	        //Esto deber�a cargar todos los conciertos al cargar HomeView, pero no, da error en la transacci�n sql
 	        return;
 	    }
@@ -52,7 +53,7 @@
        
        var match = hash.match(mainList);
        if (match) {
-	        slider.slidePage(new HomeView(adapter, homeTpl, employeeLiTpl).render().el);
+	        slider.slidePage(new HomeListView(adapter, homeListTpl, employeeLiTpl).render().el);
 	        //Esto deber�a cargar todos los conciertos al cargar HomeView, pero no, da error en la transacci�n sql
 	        adapter.findByName($('.search-key').val()).done(function(concerts) {
 	            $('.employee-list').html(employeeLiTpl(concerts));
