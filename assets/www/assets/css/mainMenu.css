@@ -16,13 +16,6 @@
      top:50%;
      left:50%;
      margin:-100px 0 0 -150px;
-    
-    background: url(../images/fondo_madera.png) no-repeat center center fixed; 
-	-webkit-background-size: cover;
-	-moz-background-size: cover;
-	-o-background-size: cover;
-	background-size: cover;
-	color: #fff;
      
     
 }

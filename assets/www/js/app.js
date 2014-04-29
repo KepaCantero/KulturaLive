@@ -2,18 +2,17 @@
 (function () {
 	
     /* ---------------------------------- Local Variables ---------------------------------- */
-    var homeListTpl = Handlebars.compile($("#homeList-tpl").html());
     var homeTpl = Handlebars.compile($("#home-tpl").html());
 	var employeeLiTpl = Handlebars.compile($("#employee-li-tpl").html());
 	var employeeTpl = Handlebars.compile($("#employee-tpl").html());
 	var detailsURL = /^#concerts\/(\d{1,})/;
     var mainList =  /^#concerts\/(\d{0})/;
     var homeApp = $( "initialPage" );
-    var adapter = new WebSqlAdapter();
-   
+    
+    var controller = new Controller();    
     var slider = new PageSlider($('body'));
     
-	adapter.initialize().done(function () {
+	controller.initialize().done(function () {
 	    route();
 	});
 
@@ -45,29 +44,26 @@
        //launch the initial page
        
        if (!hash) {
-	        slider.slidePage(new HomeMenuView(homeTpl).render().el);
-	        //Esto deber�a cargar todos los conciertos al cargar HomeView, pero no, da error en la transacci�n sql
-	        return;
+	        
+           console.log ("slider.slidePage LoadMovies");                     
+           slider.slidePage(homeApp);
+	       return;
 	    }
        
        
        var match = hash.match(mainList);
        if (match) {
-	        slider.slidePage(new HomeListView(adapter, homeListTpl, employeeLiTpl).render().el);
-	        //Esto deber�a cargar todos los conciertos al cargar HomeView, pero no, da error en la transacci�n sql
-	        adapter.findByName($('.search-key').val()).done(function(concerts) {
-	            $('.employee-list').html(employeeLiTpl(concerts));
-	        });
-	        return;
+            console.log ("slider.slidePage LoadMovies");           
+            slider.slidePage(new ListConcertsView(homeTpl, employeeLiTpl).render().el);
+            controller.LoadAllConcerts();            
+            return;
 	    }
-       
-       
        
 	    var match = hash.match(detailsURL);
 	    if (match) {
-	        adapter.findById(Number(match[1])).done(function(concerts) {
-	            slider.slidePage(new EmployeeView(adapter, employeeTpl, concerts).render().el);
-	        });
+	        var concert= controller.LoadConcert(match[1]);
+            slider.slidePage(new ConcertDetailView(adapter, employeeTpl, concert).render().el);
+	       return;    
 	    }
 	}
 	
