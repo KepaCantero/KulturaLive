@@ -2,18 +2,15 @@
 (function () {
 	
     /* ---------------------------------- Local Variables ---------------------------------- */
-    var homeTpl = Handlebars.compile($("#home-tpl").html());
-	var employeeLiTpl = Handlebars.compile($("#employee-li-tpl").html());
-	var employeeTpl = Handlebars.compile($("#employee-tpl").html());
-	var detailsURL = /^#concerts\/(\d{1,})/;
-    var mainList =  /^#concerts\/(\d{0})/;
-    var homeApp = $( "initialPage" );
     
+    var detailsURL = /^#concerts\/(\d{1,})/;
+    var mainConcertsList =  /^#mainConcertsList\//;
     var controller = new Controller();    
-    var slider = new PageSlider($('body'));
+ 
     
 	controller.initialize().done(function () {
 	    route();
+        $(".owl-carousel").owlCarousel();
 	});
 
     /* --------------------------------- Event Registration -------------------------------- */
@@ -40,29 +37,28 @@
    function route() {
 	    var hash = window.location.hash;
         	   
-     
-       //launch the initial page
+        console.log (hash);
+       
        
        if (!hash) {
 	        
            console.log ("slider.slidePage LoadMovies");                     
-           slider.slidePage(homeApp);
+           controller.LoadMainMenu();           
 	       return;
 	    }
        
        
-       var match = hash.match(mainList);
+       var match = hash.match(mainConcertsList);
        if (match) {
-            console.log ("slider.slidePage LoadMovies");           
-            slider.slidePage(new ListConcertsView(homeTpl, employeeLiTpl).render().el);
+            console.log ("slider.slidePage LoadMovies");                       
             controller.LoadAllConcerts();            
             return;
 	    }
        
 	    var match = hash.match(detailsURL);
 	    if (match) {
-	        var concert= controller.LoadConcert(match[1]);
-            slider.slidePage(new ConcertDetailView(adapter, employeeTpl, concert).render().el);
+	        console.log ("App/getConcert");
+            controller.LoadConcert(match[1]);
 	       return;    
 	    }
 	}

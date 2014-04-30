@@ -23,12 +23,30 @@ var WebSqlAdapter = function () {
                 deferred.resolve();
             }
         );
-        
-        
+            
         return deferred.promise();
    
     };
-
+    this.findById = function (id) {
+        var deferred = $.Deferred();
+        console.log("WebsqlAdapater:findbyID:" + id);
+        this.db = window.openDatabase("ConcertDB", "1.0", "Concert DB", 200000);
+        this.db.transaction(
+            function (tx) {
+                var sql = "SELECT c.id, c.bandName, c.date, c.pic " +
+                    "FROM concerts c " +
+                    "WHERE c.id=:id";
+                tx.executeSql(sql, [id], function (tx, results) {
+                    deferred.resolve(results.rows.length === 1 ? results.rows.item(0) : null);
+                });
+            },
+            function (error) {
+                console.log ("Transaction Error: " + error.message);
+                deferred.reject("Transaction Error: " + error.message);
+            }
+        );
+        return deferred.promise();
+    };
     this.findByName = function (searchKey) {
         var deferred = $.Deferred();
         console.log("findByName 0");
@@ -115,23 +133,7 @@ var WebSqlAdapter = function () {
                 });
         }         
     }
-    this.findById = function (id) {
-        var deferred = $.Deferred();
-        this.db.transaction(
-            function (tx) {
-                var sql = "SELECT c.id, c.bandName, c.date, c.pic " +
-                    "FROM concerts c " +
-                    "WHERE c.id=:id";
-                tx.executeSql(sql, [id], function (tx, results) {
-                    deferred.resolve(results.rows.length === 1 ? results.rows.item(0) : null);
-                });
-            },
-            function (error) {
-                deferred.reject("Transaction Error: " + error.message);
-            }
-        );
-        return deferred.promise();
-    };
+
 
     var createTable = function (tx) {
         tx.executeSql('DROP TABLE IF EXISTS concerts');
