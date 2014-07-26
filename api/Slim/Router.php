@@ -96,9 +96,9 @@ class Router
 
     /**
      * Return route objects that match the given HTTP method and URI
-     * @param  string               $httpMethod   The HTTP method to match against
-     * @param  string               $resourceUri  The resource URI to match against
-     * @param  bool                 $reload       Should matching routes be re-parsed?
+     * @param  string $httpMethod The HTTP method to match against
+     * @param  string $resourceUri The resource URI to match against
+     * @param  bool $reload Should matching routes be re-parsed?
      * @return array[\Slim\Route]
      */
     public function getMatchedRoutes($httpMethod, $resourceUri, $reload = false)
@@ -121,7 +121,7 @@ class Router
 
     /**
      * Add a route object to the router
-     * @param  \Slim\Route     $route      The Slim Route
+     * @param  \Slim\Route $route The Slim Route
      */
     public function map(\Slim\Route $route)
     {
@@ -156,7 +156,7 @@ class Router
 
     /**
      * Add a route group to the array
-     * @param  string     $group      The group pattern (ie. "/books/:id")
+     * @param  string $group The group pattern (ie. "/books/:id")
      * @param  array|null $middleware Optional parameter array of middleware
      * @return int        The index of the new group
      */
@@ -176,8 +176,8 @@ class Router
 
     /**
      * Get URL for named route
-     * @param  string               $name   The name of the route
-     * @param  array                $params Associative array of URL parameter names and replacement values
+     * @param  string $name The name of the route
+     * @param  array $params Associative array of URL parameter names and replacement values
      * @throws \RuntimeException            If named route not found
      * @return string                       The URL for the given route populated with provided replacement values
      */
@@ -198,8 +198,8 @@ class Router
 
     /**
      * Add named route
-     * @param  string            $name   The route name
-     * @param  \Slim\Route       $route  The route object
+     * @param  string $name The route name
+     * @param  \Slim\Route $route The route object
      * @throws \RuntimeException         If a named route already exists with the same name
      */
     public function addNamedRoute($name, \Slim\Route $route)
@@ -207,31 +207,31 @@ class Router
         if ($this->hasNamedRoute($name)) {
             throw new \RuntimeException('Named route already exists with name: ' . $name);
         }
-        $this->namedRoutes[(string) $name] = $route;
+        $this->namedRoutes[(string)$name] = $route;
     }
 
     /**
      * Has named route
-     * @param  string   $name   The route name
+     * @param  string $name The route name
      * @return bool
      */
     public function hasNamedRoute($name)
     {
         $this->getNamedRoutes();
 
-        return isset($this->namedRoutes[(string) $name]);
+        return isset($this->namedRoutes[(string)$name]);
     }
 
     /**
      * Get named route
-     * @param  string           $name
+     * @param  string $name
      * @return \Slim\Route|null
      */
     public function getNamedRoute($name)
     {
         $this->getNamedRoutes();
         if ($this->hasNamedRoute($name)) {
-            return $this->namedRoutes[(string) $name];
+            return $this->namedRoutes[(string)$name];
         } else {
             return null;
         }

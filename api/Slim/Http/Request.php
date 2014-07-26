@@ -190,8 +190,8 @@ class Request
      * of the array key if requested; if the array key does not exist, NULL is returned,
      * unless there is a default value specified.
      *
-     * @param  string           $key
-     * @param  mixed            $default
+     * @param  string $key
+     * @param  mixed $default
      * @return array|mixed|null
      */
     public function params($key = null, $default = null)
@@ -210,8 +210,8 @@ class Request
      * This method returns a key-value array of data sent in the HTTP request query string, or
      * the value of the array key if requested; if the array key does not exist, NULL is returned.
      *
-     * @param  string           $key
-     * @param  mixed            $default Default return value when key does not exist
+     * @param  string $key
+     * @param  mixed $default Default return value when key does not exist
      * @return array|mixed|null
      */
     public function get($key = null, $default = null)
@@ -242,8 +242,8 @@ class Request
      * This method returns a key-value array of data sent in the HTTP request body, or
      * the value of a hash key if requested; if the array key does not exist, NULL is returned.
      *
-     * @param  string           $key
-     * @param  mixed            $default Default return value when key does not exist
+     * @param  string $key
+     * @param  mixed $default Default return value when key does not exist
      * @return array|mixed|null
      * @throws \RuntimeException If environment input is not available
      */
@@ -279,8 +279,8 @@ class Request
 
     /**
      * Fetch PUT data (alias for \Slim\Http\Request::post)
-     * @param  string           $key
-     * @param  mixed            $default Default return value when key does not exist
+     * @param  string $key
+     * @param  mixed $default Default return value when key does not exist
      * @return array|mixed|null
      */
     public function put($key = null, $default = null)
@@ -290,8 +290,8 @@ class Request
 
     /**
      * Fetch PATCH data (alias for \Slim\Http\Request::post)
-     * @param  string           $key
-     * @param  mixed            $default Default return value when key does not exist
+     * @param  string $key
+     * @param  mixed $default Default return value when key does not exist
      * @return array|mixed|null
      */
     public function patch($key = null, $default = null)
@@ -301,8 +301,8 @@ class Request
 
     /**
      * Fetch DELETE data (alias for \Slim\Http\Request::post)
-     * @param  string           $key
-     * @param  mixed            $default Default return value when key does not exist
+     * @param  string $key
+     * @param  mixed $default Default return value when key does not exist
      * @return array|mixed|null
      */
     public function delete($key = null, $default = null)
@@ -316,7 +316,7 @@ class Request
      * This method returns a key-value array of Cookie data sent in the HTTP request, or
      * the value of a array key if requested; if the array key does not exist, NULL is returned.
      *
-     * @param  string            $key
+     * @param  string $key
      * @return array|string|null
      */
     public function cookies($key = null)
@@ -359,7 +359,7 @@ class Request
      * the value of a hash key if requested; if the array key does not exist, NULL is returned.
      *
      * @param  string $key
-     * @param  mixed  $default The default value returned if the requested header is not available
+     * @param  mixed $default The default value returned if the requested header is not available
      * @return mixed
      */
     public function headers($key = null, $default = null)

@@ -127,8 +127,8 @@ class Response implements \ArrayAccess, \Countable, \IteratorAggregate
 
     /**
      * Constructor
-     * @param string                   $body   The HTTP response body
-     * @param int                      $status The HTTP response status
+     * @param string $body The HTTP response body
+     * @param int $status The HTTP response status
      * @param \Slim\Http\Headers|array $headers The HTTP response headers
      */
     public function __construct($body = '', $status = 200, $headers = array())
@@ -160,7 +160,7 @@ class Response implements \ArrayAccess, \Countable, \IteratorAggregate
     public function status($status = null)
     {
         if (!is_null($status)) {
-            $this->status = (int) $status;
+            $this->status = (int)$status;
         }
 
         return $this->status;
@@ -170,7 +170,7 @@ class Response implements \ArrayAccess, \Countable, \IteratorAggregate
      * DEPRECATION WARNING! Access `headers` property directly.
      *
      * Get and set header
-     * @param  string      $name  Header name
+     * @param  string $name Header name
      * @param  string|null $value Header value
      * @return string      Header value
      */
@@ -222,8 +222,8 @@ class Response implements \ArrayAccess, \Countable, \IteratorAggregate
 
     /**
      * Append HTTP response body
-     * @param  string   $body       Content to append to the current HTTP response body
-     * @param  bool     $replace    Overwrite existing response body?
+     * @param  string $body Content to append to the current HTTP response body
+     * @param  bool $replace Overwrite existing response body?
      * @return string               The updated HTTP response body
      */
     public function write($body, $replace = false)
@@ -253,7 +253,7 @@ class Response implements \ArrayAccess, \Countable, \IteratorAggregate
     public function length($length = null)
     {
         if (!is_null($length)) {
-            $this->length = (int) $length;
+            $this->length = (int)$length;
         }
 
         return $this->length;
@@ -291,8 +291,8 @@ class Response implements \ArrayAccess, \Countable, \IteratorAggregate
      * relying on PHP's native implementation, Slim allows middleware the opportunity to massage or
      * analyze the raw header before the response is ultimately delivered to the HTTP client.
      *
-     * @param string        $name    The name of the cookie
-     * @param string|array  $value   If string, the value of cookie; if array, properties for
+     * @param string $name The name of the cookie
+     * @param string|array $value If string, the value of cookie; if array, properties for
      *                               cookie including: value, expire, path, domain, secure, httponly
      */
     public function setCookie($name, $value)
@@ -318,8 +318,8 @@ class Response implements \ArrayAccess, \Countable, \IteratorAggregate
      * array, only the Cookie with the given name AND domain will be removed. The invalidating cookie
      * sent with this response will adopt all properties of the second argument.
      *
-     * @param string $name     The name of the cookie
-     * @param array  $settings Properties for cookie including: value, expire, path, domain, secure, httponly
+     * @param string $name The name of the cookie
+     * @param array $settings Properties for cookie including: value, expire, path, domain, secure, httponly
      */
     public function deleteCookie($name, $settings = array())
     {
@@ -333,10 +333,10 @@ class Response implements \ArrayAccess, \Countable, \IteratorAggregate
      * This method prepares this response to return an HTTP Redirect response
      * to the HTTP client.
      *
-     * @param string $url    The redirect destination
-     * @param int    $status The redirect HTTP status code
+     * @param string $url The redirect destination
+     * @param int $status The redirect HTTP status code
      */
-    public function redirect ($url, $status = 302)
+    public function redirect($url, $status = 302)
     {
         $this->setStatus($status);
         $this->headers->set('Location', $url);
@@ -498,7 +498,7 @@ class Response implements \ArrayAccess, \Countable, \IteratorAggregate
 
     /**
      * Get message for HTTP status code
-     * @param  int         $status
+     * @param  int $status
      * @return string|null
      */
     public static function getMessageForCode($status)

@@ -51,7 +51,7 @@ class LogWriter
 
     /**
      * Constructor
-     * @param  resource                  $resource
+     * @param  resource $resource
      * @throws \InvalidArgumentException If invalid resource
      */
     public function __construct($resource)
@@ -64,12 +64,12 @@ class LogWriter
 
     /**
      * Write message
-     * @param  mixed     $message
-     * @param  int       $level
+     * @param  mixed $message
+     * @param  int $level
      * @return int|bool
      */
     public function write($message, $level = null)
     {
-        return fwrite($this->resource, (string) $message . PHP_EOL);
+        return fwrite($this->resource, (string)$message . PHP_EOL);
     }
 }

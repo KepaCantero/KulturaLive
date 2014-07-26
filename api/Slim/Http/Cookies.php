@@ -58,8 +58,8 @@ class Cookies extends \Slim\Helper\Set
      * the keys shown in the default settings above. This array will be
      * merged with the defaults shown above.
      *
-     * @param string $key   Cookie name
-     * @param mixed  $value Cookie settings
+     * @param string $key Cookie name
+     * @param mixed $value Cookie settings
      */
     public function set($key, $value)
     {
@@ -79,8 +79,8 @@ class Cookies extends \Slim\Helper\Set
      * the client-side cache to remove its cookie with the given name
      * and settings.
      *
-     * @param  string $key      Cookie name
-     * @param  array  $settings Optional cookie settings
+     * @param  string $key Cookie name
+     * @param  array $settings Optional cookie settings
      */
     public function remove($key, $settings = array())
     {

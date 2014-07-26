@@ -78,7 +78,7 @@ class PrettyExceptions extends \Slim\Middleware
 
     /**
      * Render response body
-     * @param  array      $env
+     * @param  array $env
      * @param  \Exception $exception
      * @return string
      */

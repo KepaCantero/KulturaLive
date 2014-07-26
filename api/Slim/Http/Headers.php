@@ -32,18 +32,18 @@
  */
 namespace Slim\Http;
 
- /**
-  * HTTP Headers
-  *
-  * @package Slim
-  * @author  Josh Lockhart
-  * @since   1.6.0
-  */
+/**
+ * HTTP Headers
+ *
+ * @package Slim
+ * @author  Josh Lockhart
+ * @since   1.6.0
+ */
 class Headers extends \Slim\Helper\Set
 {
     /********************************************************************************
-    * Static interface
-    *******************************************************************************/
+     * Static interface
+     *******************************************************************************/
 
     /**
      * Special-case HTTP headers that are otherwise unidentifiable as HTTP headers.
@@ -83,8 +83,8 @@ class Headers extends \Slim\Helper\Set
     }
 
     /********************************************************************************
-    * Instance interface
-    *******************************************************************************/
+     * Instance interface
+     *******************************************************************************/
 
     /**
      * Transform header name into canonical form

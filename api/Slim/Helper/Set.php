@@ -66,8 +66,8 @@ class Set implements \ArrayAccess, \Countable, \IteratorAggregate
 
     /**
      * Set data key to value
-     * @param string $key   The data key
-     * @param mixed  $value The data value
+     * @param string $key The data key
+     * @param mixed $value The data value
      */
     public function set($key, $value)
     {
@@ -76,8 +76,8 @@ class Set implements \ArrayAccess, \Countable, \IteratorAggregate
 
     /**
      * Get data value with key
-     * @param  string $key     The data key
-     * @param  mixed  $default The value to return if data key does not exist
+     * @param  string $key The data key
+     * @param  mixed $default The value to return if data key does not exist
      * @return mixed           The data value, or the default value
      */
     public function get($key, $default = null)
@@ -122,7 +122,7 @@ class Set implements \ArrayAccess, \Countable, \IteratorAggregate
 
     /**
      * Does this set contain a key?
-     * @param  string  $key The data key
+     * @param  string $key The data key
      * @return boolean
      */
     public function has($key)
@@ -215,7 +215,7 @@ class Set implements \ArrayAccess, \Countable, \IteratorAggregate
 
     /**
      * Ensure a value or object will remain globally unique
-     * @param  string  $key   The value or object name
+     * @param  string $key The value or object name
      * @param  Closure        The closure that defines the object
      * @return mixed
      */

@@ -67,7 +67,7 @@ class Environment implements \ArrayAccess, \IteratorAggregate
      * derived from $_SERVER variables. You may override the global server
      * variables by using `\Slim\Environment::mock()` instead.
      *
-     * @param  bool             $refresh Refresh properties using global server variables?
+     * @param  bool $refresh Refresh properties using global server variables?
      * @return \Slim\Environment
      */
     public static function getInstance($refresh = false)
@@ -82,7 +82,7 @@ class Environment implements \ArrayAccess, \IteratorAggregate
     /**
      * Get mock environment instance
      *
-     * @param  array       $userSettings
+     * @param  array $userSettings
      * @return \Slim\Environment
      */
     public static function mock($userSettings = array())

@@ -32,19 +32,19 @@
  */
 namespace Slim\Middleware;
 
- /**
-  * Content Types
-  *
-  * This is middleware for a Slim application that intercepts
-  * the HTTP request body and parses it into the appropriate
-  * PHP data structure if possible; else it returns the HTTP
-  * request body unchanged. This is particularly useful
-  * for preparing the HTTP request body for an XML or JSON API.
-  *
-  * @package    Slim
-  * @author     Josh Lockhart
-  * @since      1.6.0
-  */
+/**
+ * Content Types
+ *
+ * This is middleware for a Slim application that intercepts
+ * the HTTP request body and parses it into the appropriate
+ * PHP data structure if possible; else it returns the HTTP
+ * request body unchanged. This is particularly useful
+ * for preparing the HTTP request body for an XML or JSON API.
+ *
+ * @package    Slim
+ * @author     Josh Lockhart
+ * @since      1.6.0
+ */
 class ContentTypes extends \Slim\Middleware
 {
     /**
@@ -91,7 +91,7 @@ class ContentTypes extends \Slim\Middleware
      * @param  string $contentType
      * @return mixed
      */
-    protected function parse ($input, $contentType)
+    protected function parse($input, $contentType)
     {
         if (isset($this->contentTypes[$contentType]) && is_callable($this->contentTypes[$contentType])) {
             $result = call_user_func($this->contentTypes[$contentType], $input);
@@ -109,7 +109,7 @@ class ContentTypes extends \Slim\Middleware
      * This method converts the raw JSON input
      * into an associative array.
      *
-     * @param  string       $input
+     * @param  string $input
      * @return array|string
      */
     protected function parseJson($input)
@@ -130,7 +130,7 @@ class ContentTypes extends \Slim\Middleware
      * extension is not available, the raw input
      * will be returned unchanged.
      *
-     * @param  string                  $input
+     * @param  string $input
      * @return \SimpleXMLElement|string
      */
     protected function parseXml($input)
