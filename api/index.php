@@ -4,7 +4,7 @@
 require 'Slim/Slim.php';
 require 'helper.php';
 include('logging/logInit.php');
-require_once( 'class.db.php' );
+require_once('dbHelper.php');
 
 \Slim\Slim::registerAutoloader();
 /*

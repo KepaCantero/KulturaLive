@@ -3,6 +3,7 @@ require_once 'Entrada.php';
 require 'Slim/Slim.php';
 require 'helper.php';
 include('logging/logInit.php');
+require_once('dbHelper.php');
 
 $database = new DB();
 
