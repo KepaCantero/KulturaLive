@@ -1,9 +1,10 @@
 <?php
-require_once 'class.Entrada.php';
+require_once 'Entrada.php';
 require 'Slim/Slim.php';
 require 'helper.php';
 include('logging/logInit.php');
 
+$database = new DB();
 
 if (is_ajax()) {
     if (isset($_POST["nombre"]) && isset($_POST["apellidos"]) && isset($_POST["numEntradas"])
@@ -12,11 +13,25 @@ if (is_ajax()) {
         && isset($_POST["conciertoID"])
         && isset($_POST["fecha"])
     ) {
+
+        if( isset( $_POST ) )
+        {
+            foreach( $_POST as $key => $value )
+            {
+                $_POST[$key] = $database->filter( $value );
+            }
+        }
+
         $entrada = new sEntrada();
         crearEntrada($entrada);
         global $log;
         if (validarEntrada($entrada, $log)) {
-            //enviar los datos a tvp.php o a nuestra version del mismo
+            if (validarEntradaDisponibles($idConcierto, $log,$database))
+            {
+                //falta comprobar que hay entradas libres
+                //enviar los datos a tvp.php o a nuestra version del mismo
+            }
+
         }
     }
 }
@@ -26,7 +41,26 @@ function is_ajax()
 {
     return isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest';
 }
+function validarEntradaDisponibles ($idConcierto, $log,$database)
+{
 
+    $query = "SELECT num_entradas FROM conciertos WHERE id_conciertos= ".$idConcierto;
+    $entradas_disponibles=$database->num_rows( $query );
+    if( $entradas_disponibles > 0 )
+    {
+        if ( $_POST['nentradas'] > $entradas_disponibles) {
+            return false;
+        }
+        else{
+            return true;
+        }
+    }
+    else
+    {
+        return false;
+    }
+
+}
 function validarEntrada($entrada, $log)
 {
     $nombre = $entrada->show_item("nombre");

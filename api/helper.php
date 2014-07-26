@@ -3,32 +3,9 @@
 class Helper
 {
 
-    public static function getConnection()
+/*
+   public static function verify_group($idGroup)
     {
-        $dbhost = "mysql.hostinger.es";
-        $dbuser = "u251348866_root";
-        $dbpass = "7rosamu5";
-        $dbname = "u251348866_bdpru";
-        $dbh = new PDO("mysql:host=$dbhost;dbname=$dbname", $dbuser, $dbpass);
-        $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        return $dbh;
-    }
-
-    /* public static function getConnection() {
-         $dbhost="localhost";
-         $dbuser="root";
-         $dbpass="7rosamu5";
-         $dbname="bdprueba";
-         $dbh = new PDO("mysql:host=$dbhost;dbname=$dbname", $dbuser, $dbpass);
-         $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-         return $dbh;
-     }
- */
-    public static function verify_group($idGroup)
-    {
-        // Consulta del concierto
-        $db = new MySQL();
-
         $CONSULTA = $db->consulta("SELECT * FROM conciertos c, conciertos_descripcion cd, salas s
 							WHERE cd.id_conciertos=c.id_conciertos AND cd.idioma ='cas'
 							AND c.id_sala = s.id_sala
@@ -48,7 +25,7 @@ class Helper
         }
 
     }
-
+*/
     public static function verify_email($email)
     {
         return filter_var(filter_var($email, FILTER_SANITIZE_EMAIL), FILTER_VALIDATE_EMAIL);

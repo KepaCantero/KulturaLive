@@ -4,6 +4,7 @@
 require 'Slim/Slim.php';
 require 'helper.php';
 include('logging/logInit.php');
+require_once( 'class.db.php' );
 
 \Slim\Slim::registerAutoloader();
 /*
@@ -26,14 +27,12 @@ $app->run();
 
 function getConcerts()
 {
-    $sql = "select id_conciertos,id_sala,codigo_fecha,ciudad,sala,precio_ant,precio_taq,imagen FROM conciertos ORDER BY grupos";
+    $database = new DB();
     global $log;
     try {
-        $db = Helper::getConnection();
-        $stmt = $db->query($sql);
-        $concerts = $stmt->fetchAll(PDO::FETCH_OBJ);
-        $db = null;
-        echo '{"concerts": ' . json_encode($concerts) . '}';
+        $query = "select id_conciertos,id_sala,codigo_fecha,ciudad,sala,precio_ant,precio_taq,imagen FROM conciertos ORDER BY grupos";
+        $concerts = $database->get_results( $query );
+        echo json_encode($concerts);
     } catch (PDOException $e) {
         $log->logg('1', $e->getMessage(), 'High', 'Danger', 'no');
 
@@ -42,22 +41,24 @@ function getConcerts()
 
 function getConcert($id)
 {
-    $sql = "SELECT id_conciertos,id_sala,codigo_fecha,ciudad,sala,precio_ant,precio_taq,imagen FROM conciertos WHERE id_conciertos=:id";
+    $database = new DB();
     global $log;
-    try {
-        $db = Helper::getConnection();
-        $stmt = $db->prepare($sql);
-        $stmt->bindParam("id_conciertos", $id);
-        $stmt->execute();
-        $concert = $stmt->fetchObject();
-        $db = null;
-        echo json_encode($concert);
-    } catch (PDOException $e) {
-        $log->logg('1', $e->getMessage(), 'High', 'Danger', 'no');
+    $query = "SELECT id_conciertos,id_sala,codigo_fecha,ciudad,sala,precio_ant,precio_taq,imagen FROM conciertos WHERE". $id ;
+
+    if( $database->num_rows( $query ) > 0 )
+    {
+        echo json_enconde($database->get_row( $query ));
+
     }
+    else
+    {
+         $log->logg('1', "No results in GetConcerts with id:" .$id, 'High', 'Danger', 'no');
+    }
+
+
 }
 
-
+/*
 function findByName($query)
 {
     $sql = "SELECT * FROM concerts WHERE UPPER(name) LIKE :query ORDER BY name";
@@ -75,6 +76,6 @@ function findByName($query)
         $log->logg('1', $e->getMessage(), 'High', 'Danger', 'no');
     }
 }
-
+*/
 
 ?>
