@@ -1,0 +1,433 @@
+/*  
+Plantilla CSS para Kulturalive
+COLOR BASE 1 : #6a7682
+
+/* 
+   Reseteo
+------------------------------------------------------------------- */
+
+/*html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, 
+blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, font, 
+img, ins, kbd, q, s, samp, small, strike, strong, sub, tt, var, b, u, i, 
+center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, 
+tbody, tfoot, thead, tr, th, td { margin: 0; padding: 0; border: 0; outline: 0; 
+font-size: 100%; vertical-align: baseline; background: transparent; } body { 
+line-height: 1; } ol, ul { list-style: none; } blockquote, q { quotes: none; } 
+blockquote:before, blockquote:after, q:before, q:after { content: ''; content: 
+none; } :focus { outline: 0; } ins { text-decoration: none; } del { text-decoration: line-through; }
+table { border-collapse: collapse; border-spacing: 0; }*/
+
+
+/* 
+   Tipografía
+------------------------------------------------------------------- */
+
+/*p {padding: 0.2em 0 1em;}*/
+
+h1 {font: normal 1.2em sans-serif;}
+h2 {font: normal 1.1em sans-serif;}
+
+h1,h2 {
+	color: #456;
+	margin-bottom: 0.3em;
+}
+
+/* 
+   Listas
+------------------------------------------------------------------- */
+
+dl {margin-bottom: 2em;}
+dt,dd {padding: 8px 10px;}
+dt {
+	border-bottom: 1px solid #D5D5D5;
+	background: #E5E5E5;
+	color: #555;
+	font-weight: bold;
+}
+dd {
+	background: #F5F5F5;
+	border-bottom: 1px solid #E5E5E5;
+	padding-left: 16px;
+}
+
+/* 
+   Otros
+------------------------------------------------------------------- */
+/*********/
+/*GENERAL*/
+/*********/
+
+/*Los estilos de esta categoría general sobreescriben a los que vienen en topcoat-mobile-light.css*/
+
+.topcoat-navigation-bar {
+	height: 3em;
+	/*padding-left: 0.5em;
+	padding-right: 0.5em;*/
+	color: #d6dcdb;
+	/*box-shadow: inset 0 -1px #050505, 0 1px #9daca9;*/
+
+	-moz-box-sizing: border-box;
+    box-sizing: border-box;
+    background-clip: padding-box;
+    white-space: nowrap;
+    overflow: hidden;
+    word-spacing: 0;
+    padding: 0;
+    margin: 0;
+    font: inherit;
+    color: inherit;
+    background: transparent;
+    border: none;
+    cursor: default;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+
+	/*background-image:-webkit-gradient(linear,left top,left bottom,from(#050505),to(#4e4d4d));
+	background-image:-webkit-linear-gradient(#050505,#4e4d4d);
+	background-image:-moz-linear-gradient(#050505,#4e4d4d);
+	background-image:-ms-linear-gradient(#050505,#4e4d4d);
+	background-image:-o-linear-gradient(#050505,#4e4d4d);
+	background-image:linear-gradient(#050505,#4e4d4d);*/
+	
+	background-image:-webkit-gradient(linear,left top,left bottom,from(#800000),to(#500000));
+	background-image:-webkit-linear-gradient(#800000,#500000);
+	background-image:-moz-linear-gradient(#800000,#500000);
+	background-image:-ms-linear-gradient(#800000,#500000);
+	background-image:-o-linear-gradient(#800000,#500000);
+	background-image:linear-gradient(#800000,#500000);	
+}
+
+.topcoat-navigation-bar__title {
+    padding: 0;
+    margin: 0;
+    font: inherit;
+    color: #d6dcdb;
+    text-shadow:0 1px 0 #262626;
+    font-size: 1.5em;
+    font-weight: bold;
+    background: transparent;
+    border: none;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.topcoat-navigation-bar__item {
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  background-clip: padding-box;
+  position: relative;
+  display: inline-block;
+  vertical-align: top;
+  padding: 0;
+  margin: 0;
+  font: inherit;
+  color: inherit;
+  background: transparent;
+  border: none;
+  height: 3em;
+  line-height: 3em;
+  vertical-align: top;
+}
+
+.back-button {
+    position: absolute;
+    top:0em;
+    left:0.5em;
+    height:3em;
+}
+
+.search-button {
+	position: absolute;
+    top:0em;
+    right:0.5em;
+    height:3em;
+}
+
+.topcoat-icon--back {
+    background: url("../topcoat/img/back-icon-gray.png") no-repeat;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    background-size: cover;
+}
+
+.topcoat-icon--search {
+    background: url("../topcoat/img/search-icon-gray.png") no-repeat;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    background-size: cover;
+}
+
+.divFondo {
+	width:90%;
+	display:block;
+	overflow:auto;
+	margin: 1em auto 1em auto;
+	padding: 0.5em 0px 0.5em 0px;
+	border-radius:1em;
+	/*background-color: #eff1f1;*/
+	background-color: #e5e9e8;
+	/*background-color: #d6dcdb;*/
+	
+}
+
+.marginsCenter {
+	margin-left:auto;
+	margin-right:auto;
+}
+
+.topcoat-icon-button:hover,
+.topcoat-icon-button--quiet:hover,
+.topcoat-icon-button--large:hover,
+.topcoat-icon-button--large--quiet:hover {
+	/*background-color: #eff1f1;*/
+	background:transparent;
+}
+
+/*********************/
+/*LISTA DE CONCIERTOS*/
+/*********************/
+
+#fotorama {
+	width: 100%;
+	margin: 1em auto 1em auto;
+	padding: 0.5em 0px 0.5em 0px;
+	display: block;
+	overflow:auto;
+	background-color: #e5e9e8;
+}
+
+.boxImgFotorama {
+	padding: 0 1em 0 0;
+	max-width: 30%;
+	float: left;
+}
+
+.boxItemFotorama {
+/*Este overflow hidden sirve para que el contenido de este div, que va a la derecha, ocupe todo lo que no ocupe boxLi*/
+	overflow: hidden;
+	float: left;
+	display: block;
+	overflow: auto;
+}
+
+.divItemFotorama {
+	width: 100%;
+	text-align: center;
+	display: block;
+	overflow: auto;
+}
+
+.imgFotorama {
+	max-width: 100%;
+}
+
+.itemBandFotorama {
+	font: bold 1.2em sans-serif;
+	padding-bottom: 0.3em;
+	width: 100%;
+	display: block;
+	overflow: auto;
+	color:#445566;
+}
+
+.itemSalaFotorama {
+	font: bold 1.1em sans-serif;
+	width: 100%;
+	padding-bottom: 0.3em;
+	color: black;
+}
+
+.itemDateFotorama {
+	float: left;
+	width: 100%;
+	font: bold 1em sans-serif;
+	color:#445566;	
+}
+
+.itemPrecioFotorama {
+	float: left;
+	width: 100%;
+	font: bold 1.1em sans-serif;
+	color: black;
+}
+
+
+
+.listBox {
+	width: 90%;
+	margin-left:auto;
+	margin-right:auto;		
+	padding-bottom:1em;
+}
+
+/*.scroller {
+    overflow: scroll;
+    -webkit-overflow-scrolling: touch;
+    position: absolute;
+    top: 0px;
+    bottom: 0px;
+    left: 0px;
+    right: 0px;
+}*/
+
+.topcoat-list__container-kometa {
+  border-top: 1px solid #9daca9;
+  color: #454545;
+  width: 100%;
+  border-radius: 1em;
+  overflow:hidden;
+}
+
+.topcoat-list__item-kometa:first-child {
+  border-top: 1px solid #d6dcdb;
+}
+
+.topcoat-list__item-kometa {
+  padding: 0.25em;
+  border-top: 1px solid #fff;
+  border-bottom: 1px solid #9daca9;
+}
+
+.topcoat-list__header-kometa {
+  padding: 0.25em;
+  /*border-top: 1px solid #fff;
+  border-bottom: 1px solid #9daca9;*/
+  background-color: #800000;
+  color: white;
+  text-align: center;
+  font: bold 1.2em sans-serif;  
+  line-height: 1.4em;
+}
+
+.itemBox{
+	display:block; 
+	overflow:auto;
+	padding: 0.5em 0.5em 0.5em 0.5em;
+}
+
+.boxLi {
+/*Este overflow auto sirve para que este boxLi se pegue a la izquierda y lo que haya a la derecha ocupe el resto*/
+	overflow: auto;
+}
+
+.boxImg {
+}
+
+.boxItem {
+/*Este overflow hidden sirve para que el contenido de este div, que va a la derecha, ocupe todo lo que no ocupe boxLi*/
+	overflow: hidden;
+}
+
+.itemBand {
+	font: bold 1.2em sans-serif;
+	padding-bottom: 0.3em;
+	display: block;
+	overflow: auto;
+}
+
+.itemSala {
+	font: bold 1.1em sans-serif;
+	padding-bottom: 0.3em;
+	color: black;
+}
+
+/*.dateHour {
+	width: 100%;
+	display:block; 
+	overflow:auto;
+}
+
+.itemDate {
+	float: left;
+	width: 50%;
+	font: bold 1em sans-serif;
+	color:#445566;	
+}*/
+
+.itemPrecio {
+	float: left;
+	width: 50%;
+	font: bold 1.1em sans-serif;
+	color: black;
+}
+
+/***********************/
+/*DETALLE DE CONCIERTOS*/
+/***********************/
+
+#boxDetalle {
+	width:90%;
+	display:block;
+	overflow:auto;
+	margin: 0em auto 0em auto;
+	border-radius:1em;
+	background-color: white;
+}
+
+.detailImageBox {
+	max-width:50%;
+	margin-left:auto;
+	margin-right:auto;	
+	padding:0.5em 0 0.5em 0;
+	max-height:10%;
+}
+
+.detail-image {
+	width: 100%;
+	padding-top: 0.5em;
+	padding-bottom: 0.5em;
+	text-align: center;
+}
+
+.detailBand {
+	width: 100%;
+	text-align: center;
+	font: bold 1.5em sans-serif;
+	padding-bottom: 0.5em;
+	color:#445566;
+}
+
+.detailSala {
+	width: 100%;
+	text-align: center;
+	font: bold 1.4em sans-serif;
+	padding-bottom: 0.5em;
+	color: black;
+}
+
+.detailDate {
+	width: 100%;
+	text-align: center;
+	font: bold 1.3em sans-serif;
+	padding-bottom: 0.4em;
+	color:#445566;	
+}
+
+.detailHour {
+	width: 100%;
+	text-align: center;
+	font: bold 1.4em sans-serif;
+	padding-bottom: 0.5em;
+	color: black;
+}
+
+/************/
+/*FORMULARIO*/
+/************/
+#formBox {
+	padding-top: 1em;
+}
+
+.centerItem {
+	width: 100%;
+	text-align: center;
+}
+
+.form-item {
+	width: 100%;
+	margin-bottom: 1em;
+}
+

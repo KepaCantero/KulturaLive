@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+
+		<link href="assets/topcoat/css/topcoat-mobile-light.css" rel="stylesheet">
+		<link href="assets/css/styles.css" rel="stylesheet">
+		<link href="assets/css/kulturalive.css" rel="stylesheet">
+		<link href="assets/css/mainMenu.css" rel="stylesheet">		
+		<link href="assets/css/pageslider.css" rel="stylesheet">
+		<link href="assets/css/fotorama.css" rel="stylesheet">
+		<link href="assets/css/smoothness.datepick.css" rel="stylesheet">
+		<link href="assets/css/menuLateral.css" rel="stylesheet">
+        <link href="assets/css/grid.css" rel="stylesheet">
+	</head>
+
+	<body id="home2">
+        <!------------------>
+		<!--MEN� PRINCIPAL-->
+		<!------------------>
+		<script id="initialPage-tpl" type="text/x-handlebars-template">
+			
+			<div id="boxLogo">
+				<img id="logo-kometa" src="assets/images/logo_kultura_live_G_sin_fondo.png"/>
+			</div>
+			
+			<div id="initialPage">
+				<!--<ul class="ui-listview">
+					<li><a class="btn_a" href="#mainMenu/concertsList/" >ENTRADAS</a></li>
+					<li><a class="btn_s" href="#mainMenu/userForm" >USUARIO</a></li>
+					<li><a class="btn_c" href="#mainMenu/dummy" >KULTURA LIVE</a></li>
+				</ul>-->
+				
+				<a class="btn_a" href="#mainMenu/concertsList/" >ENTRADAS</a>
+				<a class="btn_s" href="#mainMenu/salas" >SALAS</a>
+				<a class="btn_c" href="#mainMenu/dummy" >INFO</a>
+			</div>
+		</script>
+		
+
+		<!--<div class="divItemFotorama">
+			<img class="imgFotorama" src="assets/pics/concierto_01.jpg" >
+			<div class="divTextoFotorama">
+				<h1>ATABAL - Lo que sea</h1>
+			</div>
+		</div>-->
+
+		<!----------------------->
+		<!--LISTA DE CONCIERTOS-->
+		<!----------------------->
+		<script id="home-tpl" type="text/x-handlebars-template">					
+			<div class="topcoat-navigation-bar header-fijo">
+	            <div class="topcoat-navigation-bar__item left quarter">
+					<a class="topcoat-icon-button--quiet back-button">
+						<span class="topcoat-icon topcoat-icon--back"></span>
+					</a>
+				</div>
+				
+				<div class="topcoat-navigation-bar__item center half">
+					<h1 class="topcoat-navigation-bar__title">CONCIERTOS</h1>
+				</div>
+				
+				<div class="topcoat-navigation-bar__item right quarter">
+                    <a id="slide-menu-button" class="topcoat-icon-button--quiet search-button">
+                        <span class="topcoat-icon topcoat-icon--search"></span>
+                    </a>
+          		</div>
+	        </div>
+			
+			<nav class="side-nav">
+                <div class="topcoat-list__container side-nav__list__container">
+				   	
+				   	<div class="nav-item">
+				   		<input id="inputPelicula" placeholder="Grupo" class="topcoat-text-input">
+					</div>
+					
+					<div class="nav-item">
+						<select id="inputId" class="topcoat-select">
+							<option selected value="">Sala</option>
+							<option value="Le Bukowski">Le Bukowski</option>
+							<option value="Atabal">Atabal</option>
+							<option value="Jimmy Jazz">Jimmy Jazz</option>
+							<option value="Rock Star">Rock Star</option>
+						</select>
+					</div>
+					
+					<div class="nav-item">
+						<input id="inputFecha" type="text" placeholder="Fecha" class="topcoat-text-input">
+					</div>
+					
+					<div class="centerItem">
+						<button id="buttonSearch" class="topcoat-button--cta">BUSCAR</button>
+					</div>
+					
+            	</div>
+            </nav>
+            
+                            
+    		<div class="main-content">				
+			    <div id="fotorama">
+										
+					<div class="itemBox">
+						<div class="boxImgFotorama">
+							<img class="imgFotorama" src="assets/pics/concierto_01.jpg" >
+						</div>
+						<div class="boxItemFotorama">
+							<div class="itemBandFotorama">Contra Warriors</div>
+							<div class="itemSalaFotorama">Atabal</div>
+							<div class="itemDateFotorama">18 - AGO</div>
+							<div class="itemPrecioFotorama">10 euros</div>
+						</div>
+					</div>
+				
+					<div class="itemBox">
+						<div class="boxImgFotorama">
+							<img class="imgFotorama" src="assets/pics/concierto_02.jpg" >
+						</div>
+						<div class="boxItemFotorama">
+							<div class="itemBandFotorama">Guardian Legends</div>
+							<div class="itemSalaFotorama">Atabal</div>
+							<div class="itemDateFotorama">19 - AGO</div>
+							<div class="itemPrecioFotorama">8 euros</div>
+						</div>
+					</div>
+					
+					<div class="itemBox">
+						<div class="boxImgFotorama">
+							<img class="imgFotorama" src="assets/pics/concierto_03.jpg" >
+						</div>
+						<div class="boxItemFotorama">
+							<div class="itemBandFotorama">DJ Chamaleon</div>
+							<div class="itemSala">Jimmy Jazz</div>
+							<div class="itemDateFotorama">20 - AGO</div>
+							<div class="itemPrecioFotorama">9 euros</div>
+						</div>
+					</div>
+					
+				</div>
+                
+				<div class="listBox">
+					<div class="topcoat-list__container-kometa">
+						<dl class="topcoat-list list employee-list"></dl>
+					</div>
+				</div>
+			</div>
+		</script>
+
+		<!----------------------------------->
+		<!--ITEMS DE LA LISTA DE CONCIERTOS-->
+		<!----------------------------------->
+		<script id="employee-li-tpl" type="text/x-handlebars-template">
+			{{#.}}
+			
+			{{#if nuevaFecha}}
+				<li class="topcoat-list__header-kometa">{{date}}</li>
+			{{/if}}
+			
+			<li class="topcoat-list__item-kometa">
+				<div class="itemBox">
+					<a href="#mainMenu/concertsList/{{id}}">
+						<div class="boxLi">
+							<div class="boxImg">
+								{{#if pic}}
+									<img src="assets/pics/{{pic}}">
+								{{else}}
+									<img src="assets/pics/no_disponible.jpg">
+								{{/if}}
+							</div>
+							<div class="boxItem">
+								<div class="itemBand">{{bandName}}</div>
+								<div class="itemSala">{{sala}}</div>
+								<div class="itemPrecio">{{precio}}</div>
+							</div>
+						</div>
+					</a>
+				</div>
+			</li>
+			{{/.}}
+		</script>
+
+		
+		<!-------------------------->
+		<!--DETALLES DEL CONCIERTO-->
+		<!-------------------------->
+		<script id="employee-tpl" type="text/x-handlebars-template">
+			<div class="topcoat-navigation-bar">
+				<div class="topcoat-navigation-bar__item left quarter">
+					<a class="topcoat-icon-button--quiet back-button">
+						<span class="topcoat-icon topcoat-icon--back"></span>
+					</a>
+				</div>
+				
+				<div class="topcoat-navigation-bar__item center half">
+					<h1 class="topcoat-navigation-bar__title">{{bandName}}</h1>
+				</div>
+				
+				<div class="topcoat-navigation-bar__item right quarter">
+          		</div>
+			</div>
+			
+         
+            <div class="main-content">
+				<div class="divFondo">
+					<div class="detailImageBox">
+						{{#if pic}}
+							<div class="detail-image">
+								<img src="assets/pics/{{pic}}">
+							</div>
+						{{else}}
+							<div class="detail-image">
+								<img src="assets/pics/no_disponible.jpg">
+							</div>
+						{{/if}}
+					</div>
+	
+					<div id="myDivId" class="detailBand">{{bandName}}</div>				
+					<div class="detailSala">{{sala}}</div>
+					<div class="detailDate">{{date}}</div>
+					<div class="detailHour">{{precio}}</div>		
+					<div class="detail-image">
+						<a class="topcoat-button--cta" href="#mainMenu/ticketDetails" >COMPRAR ENTRADA</a>
+					</div>		
+				</div>
+			</div>
+			
+		</script>
+      
+      	
+      	<!-------------->
+		<!--FORMULARIO-->
+		<!-------------->
+		<script id="ticketDetails-tpl" type="text/x-handlebars-template">
+			<div class="topcoat-navigation-bar">
+				<div class="topcoat-navigation-bar__item left quarter">
+					<a class="topcoat-icon-button--quiet back-button">
+						<span class="topcoat-icon topcoat-icon--back"></span>
+					</a>
+				</div>
+				<div class="topcoat-navigation-bar__item center half">
+					<h1 class="topcoat-navigation-bar__title">Formulario</h1>
+				</div>
+			</div>
+			
+			<div class="main-content">
+				<div class="divFondo">
+					<div id="formBox">
+						<form>
+							{{#if name}}		
+								<div class="form-item centerItem">	
+									<input type="text" class="topcoat-text-input" placeholder="text" value={{name}}>
+								</div>
+							{{else}}
+								<div class="form-item centerItem">
+									<input type="text" class="topcoat-text-input" placeholder="text" value="Introduce tu nombre">
+								</div>
+							{{/if}}
+				
+							{{#if email}}
+								<div class="form-item centerItem">
+									<input type="text" class="topcoat-text-input" placeholder="text" value={{email}}>
+								</div>
+							{{else}}
+								<div class="form-item centerItem">
+									<input type="text" class="topcoat-text-input" placeholder="text" value="Introduce tu email">
+								</div>
+								<div class="form-item centerItem">
+									<input type="text" class="topcoat-text-input" placeholder="text" value="Repite tu email ">
+								</div>
+							{{/if}}					
+						</form>
+					</div>
+					
+					<div class="form-item centerItem">
+						<button class="topcoat-button--cta" >COMPRAR</button>
+					</div>
+				
+				</div>
+			</div>
+		</script>
+      	
+      	
+        <!------------------->
+		<!--DUMMY PAGE INFO-->
+		<!------------------->
+		<script id="dummy-tpl" type="text/x-handlebars-template">
+			<div class="topcoat-navigation-bar">
+				<div class="topcoat-navigation-bar__item left quarter">
+					<a class="topcoat-icon-button--quiet back-button">
+						<span class="topcoat-icon topcoat-icon--back"></span>
+					</a>
+				</div>
+				<div class="topcoat-navigation-bar__item center half">
+					<h1 class="topcoat-navigation-bar__title">INFO</h1>
+				</div>
+			</div>
+			<div class="main-content">
+            	<div class="divFondo">
+            		<h1 style="margin:0 1em 0 1em">Aqu&iacute; ir&aacute; la informaci&oacute;n sobre Kultura Live.</h1>
+            	</div> 
+            <div>
+		</script>
+		
+		
+		<!---------------------->
+		<!--DUMMY PAGE ANUNCIO-->
+		<!---------------------->
+		<script id="dummyAnuncio-tpl" type="text/x-handlebars-template">
+			<div class="topcoat-navigation-bar">
+				<div class="topcoat-navigation-bar__item left quarter">
+					<a class="topcoat-icon-button--quiet back-button">
+						<span class="topcoat-icon topcoat-icon--back"></span>
+					</a>
+				</div>
+				<div class="topcoat-navigation-bar__item center half">
+					<h1 class="topcoat-navigation-bar__title">ANUNCIO</h1>
+				</div>
+                
+			</div>
+            <div class="main-content">
+            	<div class="divFondo">
+            		<h1 style="margin:0 1em 0 1em">Aqu&iacute; ir&aacute;n los detalles del anuncio.</h1>
+            	</div> 
+            <div>
+		</script>
+                
+                
+		<!--------------------------->
+		<!--DUMMY PAGE DETALLE SALA-->
+		<!--------------------------->
+		<script id="dummySala-tpl" type="text/x-handlebars-template">
+			<div class="topcoat-navigation-bar">
+				<div class="topcoat-navigation-bar__item left quarter">
+					<a class="topcoat-icon-button--quiet back-button">
+						<span class="topcoat-icon topcoat-icon--back"></span>
+					</a>
+				</div>
+				<div class="topcoat-navigation-bar__item center half">
+					<h1 class="topcoat-navigation-bar__title">SALA</h1>
+				</div>
+                
+			</div>
+            <div class="main-content">
+            	<div class="divFondo">
+            		<h1 style="margin:0 1em 0 1em">Aqu&iacute; ir&aacute;n los detalles de la sala.</h1>
+            	</div> 
+            <div>
+		</script>  
+      
+        
+        
+    	<!------------------>
+		<!--LISTA DE SALAS-->
+		<!------------------>  
+        <script id="listadosalas-tpl" type="text/x-handlebars-template">
+	        <div class="topcoat-navigation-bar">
+		            <div class="topcoat-navigation-bar__item left quarter">
+						<a class="topcoat-icon-button--quiet back-button">
+							<span class="topcoat-icon topcoat-icon--back"></span>
+						</a>
+					</div>
+					
+					<div class="topcoat-navigation-bar__item center half">
+						<h1 class="topcoat-navigation-bar__title">SALAS</h1>
+					</div>					
+		    </div>
+		    
+			<div class="main-content">
+		        <div class="divFondo">
+			        <div id="afui"">  
+				        <div class="uwrap" id="content">
+				        	<div class="upage panel" id="mainpage" data-header="af-header-0" data-footer="none">
+				        		<div class="upage-outer">
+				        			<div class="upage-content" id="mainsub">
+				        				<div class="grid grid-pad urow uib_row_1 row-height-1" data-uib="layout/row" data-ver="0">
+				        					<div class="col uib_col_1 col-0_12-12" data-uib="layout/col" data-ver="0">
+				        						<div class="widget-container content-area wrapping-col left style="text-align:center">
+				
+											         <div class="widget uib_w_3 d-margins scale-image" data-uib="media/img" data-ver="0">
+														<figure class="figure-align">
+															<a href="#sala/dummy" data-transition="fade"> <img src="assets/images/salas/sala_azkena.png"> </a>
+											
+															<figcaption data-position="bottom"></figcaption>
+														</figure>
+													</div>
+											
+											         <div class="widget uib_w_4 d-margins scale-image" data-uib="media/img" data-ver="0">
+														<figure class="figure-align">
+															<a href="#sala/dummy" data-transition="fade"> <img src="assets/images/salas/sala_backstage.png"> </a>
+															<figcaption data-position="bottom"></figcaption>
+														</figure>
+													</div>
+											
+													<div class="widget uib_w_5 d-margins scale-image" data-uib="media/img" data-ver="0">
+														<figure class="figure-align">
+															<a href="#sala/dummy" data-transition="fade"> <img src="assets/images/salas/sala_bermeo.png"> </a>
+															<figcaption data-position="bottom"></figcaption>
+														</figure>
+													</div>
+													<div class="widget uib_w_6 scale-image d-margins" data-uib="media/img" data-ver="0">
+														<figure class="figure-align">
+															<a href="#sala/dummy" data-transition="fade"> <img src="assets/images/salas/sala_bigstar.png"> </a>
+															<figcaption data-position="bottom"></figcaption>
+														</figure>
+													</div>
+													<div class="widget uib_w_7 scale-image d-margins" data-uib="media/img" data-ver="0">
+														<figure class="figure-align">
+															<a href="#sala/dummy" data-transition="fade"> <img src="assets/images/salas/sala_bjc.png"> </a>
+															<figcaption data-position="bottom"></figcaption>
+														</figure>
+													</div>
+													<div class="widget uib_w_8 scale-image d-margins" data-uib="media/img" data-ver="0">
+														<figure class="figure-align">
+															<a href="#sala/dummy" data-transition="fade"> <img src="assets/images/salas/sala_doka.png"> </a>
+															<figcaption data-position="bottom"></figcaption>
+														</figure>
+													</div>
+													<div class="widget uib_w_9 scale-image d-margins" data-uib="media/img" data-ver="0">
+														<figure class="figure-align">
+															<a href="#sala/dummy" data-transition="fade"> <img src="assets/images/salas/sala_emankorsarea.png"> </a>
+															<figcaption data-position="bottom"></figcaption>
+														</figure>
+													</div>
+													<div class="widget uib_w_10 scale-image d-margins" data-uib="media/img" data-ver="0">
+														<figure class="figure-align">
+															<a href="#sala/dummy" data-transition="fade"> <img src="assets/images/salas/sala_gora.png"> </a>
+															<figcaption data-position="bottom"></figcaption>
+														</figure>
+													</div>
+													<div class="widget uib_w_11 scale-image d-margins" data-uib="media/img" data-ver="0">
+														<figure class="figure-align">
+															<a href="#salas/helldorado" data-transition="fade"> <img src="assets/images/salas/sala_helldorado.png"> </a>
+															<figcaption data-position="bottom"></figcaption>
+														</figure>
+													</div>
+													<div class="widget uib_w_13 scale-image d-margins" data-uib="media/img" data-ver="0">
+														<figure class="figure-align">
+															<a href="#sala/dummy" data-transition="fade"> <img src="assets/images/salas/sala_hordago.png"> </a>
+															<figcaption data-position="bottom"></figcaption>
+														</figure>
+													</div>
+													<div class="widget uib_w_14 scale-image d-margins" data-uib="media/img" data-ver="0">
+														<figure class="figure-align">
+															<a href="#sala/dummy" data-transition="fade"> <img src="assets/images/salas/sala_ibuhots.png"> </a>
+															<figcaption data-position="bottom"></figcaption>
+														</figure>
+													</div>
+													<div class="widget uib_w_15 scale-image d-margins" data-uib="media/img" data-ver="0">
+														<figure class="figure-align">
+															<a href="#sala/dummy" data-transition="fade"> <img src="assets/images/salas/sala_kafeantzoki.png"> </a>
+															<figcaption data-position="bottom"></figcaption>
+														</figure>
+													</div>
+													<div class="widget uib_w_16 scale-image d-margins" data-uib="media/img" data-ver="0">
+														<figure class="figure-align">
+															<a href="#sala/dummy" data-transition="fade"> <img src="assets/images/salas/sala_santana.png"> </a>
+															<figcaption data-position="bottom"></figcaption>
+														</figure>
+													</div>
+													<div class="widget uib_w_17 scale-image d-margins" data-uib="media/img" data-ver="0">
+														<figure class="figure-align">
+															<a href="#sala/dummy" data-transition="fade"> <img src="assets/images/salas/sala_totem.png"> </a>
+															<figcaption data-position="bottom"></figcaption>
+														</figure>
+													</div>
+													<div class="widget uib_w_18 scale-image d-margins" data-uib="media/img" data-ver="0">
+														<figure class="figure-align">
+															<a href="#sala/dummy" data-transition="fade"> <img src="assets/images/salas/sala_zulo.png"> </a>
+															<figcaption data-position="bottom"></figcaption>
+														</figure>
+													</div>
+				         							<span class="uib_shim"></span>
+			        							</div>
+			       							</div>
+				       						<span class="uib_shim"></span>
+				        				</div>
+			        				</div>
+				    			<!-- /upage-outer -->
+				        		</div>
+			         		</div>
+		         		</div>
+	         		</div>
+	     		</div>
+	     	</div>
+        </script>
+        
+        
+		<script src="lib/jquery-2.1.1.min.js"></script>
+		<script src="lib/jquery.plugin.js"></script>
+		<script src="lib/jquery.datepick.js"></script>
+		<script src="lib/jquery.datepick-es.js"></script>
+		<!--<script src="lib/jquery.datepick-eu.js"></script>-->
+        
+		<script src="lib/fotorama.js"></script>
+		<script src="lib/jquery.jsonp.js"></script>		
+		<script src="lib/fastclick.js"></script>
+		<script src="lib/handlebars.js"></script>
+		<script src="lib/pageslider.js"></script>
+
+		<script src="js/views/DummyView.js"></script>
+		<script src="js/views/MainMenuView.js"></script>
+		<script src="js/views/ListConcertsView.js"></script>
+		<script src="js/views/ConcertDetailsView.js"></script>
+		<script src="js/views/ticketDetailsView.js"></script>
+
+		<script src="js/adapters/websql-adapter.js"></script>
+		<script src="js/Ajax.js"></script>
+		<script src="js/Controller.js"></script>
+		
+		<script src="js/app.js"></script>
+	
+	</body>
+</html>

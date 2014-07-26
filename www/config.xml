@@ -1,0 +1,17 @@
+<?xml version='1.0' encoding='utf-8'?>
+<widget id="com.kometa.kulturalive" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+    <name>KulturaLive</name>
+    <description>
+        Aplicación para comprar entradas a conciertos de la red Kultura Live.
+    </description>
+    <author email="dev@callback.apache.org" href="http://cordova.io">
+        Kometa S.L.
+    </author>
+    <content src="index.html" />
+    <access origin="*" />
+    <gap:plugin name="org.apache.cordova.device" />
+    <preference name="Fullscreen" value="false" />
+    <preference name="fullscreen" value="false" />
+    <preference name="webviewbounce" value="true" />
+    
+</widget>

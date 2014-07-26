@@ -1,0 +1,66 @@
+
+#home2 {
+	/*background: url(../images/fondo_madera.png) no-repeat center fixed;*/ 
+	background: url(../images/fondo_madera.png) repeat;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+	color: #fff;
+    /*display:block;
+    overflow:auto;*/
+}
+#initialPage{
+     position:absolute;
+     top:40%;
+     left:10%;
+     z-index:15;
+     width:80%;
+     margin-left:auto;
+     margin-right:auto;
+     text-align:center;
+}
+
+#logo-kometa{
+	position:absolute;
+    top:0%;
+    left:0%;
+    z-index:25;
+    max-width: 75%;
+    max-height: 30%;
+}
+
+.btn_a { 
+    font-size: 1em; font-weight: normal; padding: 90px 0px 0px 0px; text-align: center; 
+    width: 95px;
+	display: inline-block;
+	background: url(../images/iconos_menu.png) no-repeat 0px 0px;
+	border: none;
+	margin: 0px 20px 0px 20px;
+    background-position: 0px 0px; 
+    ;
+}
+.btn_s { 
+    font-size: 1em; font-weight: normal; padding: 90px 0px 0px 0px; text-align: center; 
+    width: 95px;
+	display: inline-block;
+	background: url(../images/iconos_menu.png) no-repeat 0px 0px;
+	border: none;
+	margin: 0px 20px 0px 0px;
+    background-position: -95px 0px; }
+/*.btn_l { 
+    font-size: .8em; font-weight: normal; padding: 90px 0px 0px 0px; text-align: center; 
+    width: 75px;
+	display: inline-block;
+	background: url(../images/home_buttons.png) no-repeat 0px 0px;
+	border: none;
+	margin: 0px 20px 20px 20px;
+    background-position: -170px 0px; }*/
+.btn_c { 
+    font-size: 1em; font-weight: normal; padding: 90px 0px 0px 0px; text-align: center; 
+    width: 95px;
+	display: inline-block;
+	background: url(../images/iconos_menu.png) no-repeat 0px 0px;
+	border: none;
+	margin: 0px 0px 0px 0px;
+    background-position: -190px 0px; }
