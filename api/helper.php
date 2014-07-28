@@ -3,10 +3,12 @@
 class Helper
 {
 
-/*
+
    public static function verify_group($idGroup)
     {
-        $CONSULTA = $db->consulta("SELECT * FROM conciertos c, conciertos_descripcion cd, salas s
+        global $database;
+
+        /*$CONSULTA = $database->consulta("SELECT * FROM conciertos c, conciertos_descripcion cd, salas s
 							WHERE cd.id_conciertos=c.id_conciertos AND cd.idioma ='cas'
 							AND c.id_sala = s.id_sala
 							AND c.codigo_fecha >= " . fechaActual() . "
@@ -18,14 +20,14 @@ class Helper
 
 
         // Si el concierto existe y cumple las condiciones
-        if ($db->num_rows($CONSULTA) > 0) {
+        if ($database->num_rows($CONSULTA) > 0) {
             return true;
         } else {
             return false;
         }
-
-    }
 */
+    }
+
     public static function verify_email($email)
     {
         return filter_var(filter_var($email, FILTER_SANITIZE_EMAIL), FILTER_VALIDATE_EMAIL);

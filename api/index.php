@@ -2,9 +2,10 @@
 
 
 require 'Slim/Slim.php';
-require 'helper.php';
-include('logging/logInit.php');
 require_once('dbHelper.php');
+require 'helper.php';
+include('logInit.php');
+
 
 \Slim\Slim::registerAutoloader();
 /*
@@ -27,12 +28,15 @@ $app->run();
 
 function getConcerts()
 {
-    $database = new DB();
+    global $database;
     global $log;
     try {
         $query = "select id_conciertos,id_sala,codigo_fecha,ciudad,sala,precio_ant,precio_taq,imagen FROM conciertos ORDER BY grupos";
+
         $concerts = $database->get_results( $query );
+
         echo json_encode($concerts);
+
     } catch (PDOException $e) {
         $log->logg('1', $e->getMessage(), 'High', 'Danger', 'no');
 
@@ -41,7 +45,7 @@ function getConcerts()
 
 function getConcert($id)
 {
-    $database = new DB();
+    global $database;
     global $log;
     $query = "SELECT id_conciertos,id_sala,codigo_fecha,ciudad,sala,precio_ant,precio_taq,imagen FROM conciertos WHERE". $id ;
 
@@ -55,17 +59,17 @@ function getConcert($id)
          $log->logg('1', "No results in GetConcerts with id:" .$id, 'High', 'Danger', 'no');
     }
 
-
 }
 
-/*
+
 function findByName($query)
 {
     $sql = "SELECT * FROM concerts WHERE UPPER(name) LIKE :query ORDER BY name";
+    global $database;
     global $log;
     try {
-        $db = Helper::getConnection();
-        $stmt = $db->prepare($sql);
+
+        $stmt = $database->prepare($sql);
         $query = "%" . $query . "%";
         $stmt->bindParam("query", $query);
         $stmt->execute();
@@ -76,6 +80,6 @@ function findByName($query)
         $log->logg('1', $e->getMessage(), 'High', 'Danger', 'no');
     }
 }
-*/
+
 
 ?>

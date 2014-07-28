@@ -1,6 +1,6 @@
 <?
 /**
- * constants.php
+ * constantsLogger.php
  *
  * This file is intended to group all constants to
  * make it easier for the site administrator to tweak
@@ -10,26 +10,6 @@
  * Last Updated: March 21, 2008
  */
  
-/**
- * Database Constants - these constants are required
- * in order for there to be a successful connection
- * to the MySQL database. Make sure the information is
- * correct.
- */
-/*
-define('DB_SERVER', "localhost");  //Here goes the server (Normally it will be localhost)
-define('DB_USER', "root");     //Here goes the username
-define('DB_PASS', "7rosamu5");     //The password
-define('DB_NAME', "bdprueba");      //The database name
-*/
-
-define('DB_SERVER', "mysql.hostinger.es");  //Here goes the server (Normally it will be localhost)
-define('DB_USER', "u251348866_root");     //Here goes the username
-define('DB_PASS', "7rosamu5");     //The password
-define('DB_NAME', "u251348866_bdpru");      //The database name
-
-
-
 
 /**
  * Database Table Constants - these constants

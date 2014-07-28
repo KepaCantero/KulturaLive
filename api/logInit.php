@@ -8,9 +8,8 @@
  * Last Updated: March 21, 2008
  */
 
-include('database.php');
 include('log.class.php');
-include ('constants.php');
+include('constantsLogger.php');
 $log= new Logs;
 
 
