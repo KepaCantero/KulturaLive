@@ -3,12 +3,12 @@
 class Helper
 {
 
-
+/*
    public static function verify_group($idGroup)
     {
         global $database;
 
-        /*$CONSULTA = $database->consulta("SELECT * FROM conciertos c, conciertos_descripcion cd, salas s
+        $CONSULTA = $database->consulta("SELECT * FROM conciertos c, conciertos_descripcion cd, salas s
 							WHERE cd.id_conciertos=c.id_conciertos AND cd.idioma ='cas'
 							AND c.id_sala = s.id_sala
 							AND c.codigo_fecha >= " . fechaActual() . "
@@ -25,8 +25,9 @@ class Helper
         } else {
             return false;
         }
+ }
 */
-    }
+
 
     public static function verify_email($email)
     {
