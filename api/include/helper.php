@@ -11,7 +11,7 @@ class Helper
         $CONSULTA = $database->consulta("SELECT * FROM conciertos c, conciertos_descripcion cd, salas s
 							WHERE cd.id_conciertos=c.id_conciertos AND cd.idioma ='cas'
 							AND c.id_sala = s.id_sala
-							AND c.codigo_fecha >= " . fechaActual() . "
+							AND c.codigo_fecha >= " . CURRENT_DATE() . "
 							AND c.visible = 'Si'
 							AND c.entrada_inet = 1
 							AND c.num_entradas > 0
@@ -59,18 +59,18 @@ class Helper
         }
     }
 
-// FUNCI�N PARA OBTENER FECHA ACTUAL EN FORMATO CODIFICACI�N LARGA
-    public static function fechaActual()
-    {
+    public static function  sql_quote($val){
 
-        if (date("n") > 3 and date("n") < 10) {
-            $datoActual = 1;
-        } else {
-            $datoActual = -1;
-        }
+        if(get_magic_quotes_gpc())
+            $val = stripslashes($val);
 
-        $FECHAACTUAL = mktime(date("H"), date("i"), 00, date("n"), date("d"), date("Y"), $datoActual);
+        //chequea si la funci�n existe
+        if(function_exists("mysql_real_escape_string"))
+            $val = mysql_real_escape_string( $val );
 
-        return ($FECHAACTUAL);
+        else //para PHP version <4.3.0 usa addslashes
+            $val = addslashes( $val );
+
+        return $val;
     }
 }

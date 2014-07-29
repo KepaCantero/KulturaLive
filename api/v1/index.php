@@ -3,6 +3,7 @@
 require_once '../include/helper.php';
 require_once '../include/logInit.php';
 require_once '../include/dbHelper.php';
+require_once '../include/Entrada.php';
 require '.././libs/Slim/Slim.php';
 require_once 'compraEntradas.php';
 
@@ -23,7 +24,7 @@ $app = new \Slim\Slim();
 $app->get('/concerts', 'getConcerts');
 $app->get('/concerts/:id', 'getConcert');
 $app->get('/concerts/search/:query', 'findByName');
-$app->run();
+
 
 function echoResponse($status_code, $response) {
     $app = \Slim\Slim::getInstance();
@@ -68,26 +69,37 @@ $app->post('/comprarentrada', function() use ($app) {
     global $database;
     global $log;
 
-    verifyRequiredParams(array('nombre', 'dni', 'conciertoID','apellidos','numEntradas','email','fecha'));
+    //verifyRequiredParams(array('nombre', 'apellidos', 'dni', 'email','nentradas', 'idGrupo','grupos'));
 
     $response = array();
 
-    // reading post params
-    $name = $database->filter( $app->request->post('name'));
-    $dni = $database->filter( $app->request->post("dni"));
+    $nombre = "kepa";
+    $dni = "20223532T";
+    $apellidos = "cantero";
+    $email = "kcantero@gmail.com";
+
+    $idGrupo =  "2195";
+    $nentradas =  "2";
+    $grupos= "eskorbuto";
+
+    //echo "aqui-0-";
+   $dni = $database->filter( $app->request->post("dni"));
     $apellidos = $database->filter( $app->request->post("apellidos"));
     $email = $database->filter( $app->request->post('email'));
     $nombre = $database->filter( $app->request->post("nombre"));
     $idGrupo =  $database->filter($app->request->post("idGrupo"));
-    $numEntradas =  $database->filter($app->request->post("numEntradas"));
+    $nentradas =  $database->filter($app->request->post("nentradas"));
+     $grupos=$database->filter($app->request->post("grupos"));
 
     $entrada = new sEntrada();
-    crearEntrada($entrada,$name,$nombre,$apellidos, $dni, $email, $idGrupo, $numEntradas);
+   crearEntrada($entrada,$nombre,$apellidos, $dni, $email, $idGrupo, $nentradas,$grupos);
+
     if (validarEntrada($entrada, $log)) {
         if (validarGrupo($idGrupo))
         {
-            if (validarEntradaDisponibles($entrada->show_item("numEntradas")))
+            if (validarEntradaDisponibles($entrada->show_item("id"),$entrada->show_item("nentradas")))
             {
+
                 $response["error"] = false;
                 $response["message"] = "La entrada esta validada";
                 echoResponse(200, $response);
@@ -95,28 +107,31 @@ $app->post('/comprarentrada', function() use ($app) {
             }
             else
             {
+
                 $response["error"] = true;
                 $response["message"] = "No hay entradas disponibles";
-                echoResponse(200, $response);
+                echoResponse(500, $response);
             }
         }
         else
-        {    $response["error"] = true;
+        {
+
+            $response["error"] = true;
             $response["message"] = "El grupo no actua en esas fechas";
-            echoResponse(200, $response);
+            echoResponse(500, $response);
         }
     }
     else
     {
         $response["error"] = true;
         $response["message"] = "Revisa los datos ";
-        echoResponse(200, $response);
+        echoResponse(500, $response);
 
     }
 
 });
 
-
+$app->run();
 function getConcerts()
 {
     global $database;

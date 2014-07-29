@@ -15,11 +15,11 @@ function validarGrupo($idGroup)
     $query =  "SELECT * FROM conciertos c, conciertos_descripcion cd, salas s
 							WHERE cd.id_conciertos=c.id_conciertos AND cd.idioma ='cas'
 							AND c.id_sala = s.id_sala
-							AND c.codigo_fecha >= " . helper::fechaActual() . "
+							AND c.codigo_fecha >= CURRENT_DATE()
 							AND c.visible = 'Si'
 							AND c.entrada_inet = 1
 							AND c.num_entradas > 0
-							AND c.id_conciertos =". $_GET[$idGroup] ;
+							AND c.id_conciertos =". $idGroup ;
 
 
     $grupo_disponible=$database->num_rows( $query );
@@ -30,16 +30,17 @@ function validarGrupo($idGroup)
 
 
 }
-function validarEntradaDisponibles ($idConcierto)
+function validarEntradaDisponibles ($idConcierto,$nentradas)
 {
 
     global $database;
-
+    echo $idConcierto;
+    echo $nentradas;
     $query = "SELECT num_entradas FROM conciertos WHERE id_conciertos= ".$idConcierto;
-    $entradas_disponibles=$database->num_rows( $query );
-    if( $entradas_disponibles > 0 )
+    $entradas_disponibles=$database->get_row( $query );
+    if( $entradas_disponibles[0] > 0 )
     {
-        if ( $_POST['nentradas'] > $entradas_disponibles) {
+        if ( $nentradas> $entradas_disponibles) {
             return false;
         }
         else{
@@ -63,42 +64,40 @@ function validarEntrada($entrada)
 
 
     if (helper::verify_dni($dni) != 'OK') {
+        echo "josu0";
         $msg = "Dni no valido";
         return false;
     }
-    elseif ($nombre . value . length != 0 && $apellidos . value . length != 0) {
+    elseif (strlen($nombre) == 0 && strlen($apellidos) == 0) {
+        echo "josu1";
         $msg = ("Nombre o Apellido no correcto");
-        $log->logg('1', $msg, 'Medium', 'Yellow', 'yes');
+        $log->logg('1', $msg, 'Medium', 'Yellow', 'no');
         return false;
-    } elseif (helper::verify_email($email)) {
+    } elseif  (!helper::verify_email($email)) {
+        echo $email;
         $msg = "E-mail incorrecta.";
-        $log->logg('1', $msg, 'Medium', 'Yellow', 'yes');
+        $log->logg('1', $msg, 'Medium', 'Yellow', 'no');
+        echo "josu2";
         return false;
-    } elseif (helper::verify_group($idGrupo)) {
-        $msg = "Grupo no valido.";
-        $log->logg('1', $msg, 'Medium', 'Yellow', 'yes');
-        return false;
-
     }
+    echo "josu3";
     return true;
 
 }
 
-function crearEntrada($entrada,$nombre,$apellidos, $dni, $email, $idGrupo, $nentradas)
+function crearEntrada($entrada,$nombre,$apellidos, $dni, $email, $idGrupo, $nentradas,$grupos)
 {
 
-    $grupo_sin_espacios = str_replace(" ", "", $_POST['grupos']);
+    $grupo_sin_espacios = str_replace(" ", "", $grupos);
     $grupo_sin_espacios = str_replace("+", "", $grupo_sin_espacios);
     $grupo_sin_espacios = strtoupper(substr($grupo_sin_espacios, 0, 5));
-
-
     global $database;
 
 
     $query =  "SELECT precio_ant,precio_comision,printathome FROM conciertos c, conciertos_descripcion cd, salas s
 							WHERE cd.id_conciertos=c.id_conciertos AND cd.idioma ='cas'
 							AND c.id_sala = s.id_sala
-							AND c.codigo_fecha >= " . helper::fechaActual() . "
+							AND c.codigo_fecha >= CURRENT_DATE()
 							AND c.visible = 'Si'
 							AND c.entrada_inet = 1
 							AND c.num_entradas > 0
@@ -109,17 +108,18 @@ function crearEntrada($entrada,$nombre,$apellidos, $dni, $email, $idGrupo, $nent
 
     if( $grupo_disponible > 0 )
     {
+
         $row=$database->get_row( $query );
         $precio_ant=  $row[0];
         $precio_comision=$row[1];
         $printathome=$row[2];
 
-        $entrada->add_item($_GET['id'],
+        $entrada->add_item($idGrupo,
             $grupo_sin_espacios,
-            strip_tags(sql_quote($nombre)),
-            strip_tags(sql_quote($apellidos)),
-            strip_tags(sql_quote($dni)),
-            strip_tags(sql_quote($email)),
+            strip_tags(helper::sql_quote($nombre)),
+            strip_tags(helper::sql_quote($apellidos)),
+            strip_tags(helper::sql_quote($dni)),
+            strip_tags(helper::sql_quote($email)),
             abs($nentradas),
             $precio_ant,
             $precio_comision,
@@ -127,7 +127,7 @@ function crearEntrada($entrada,$nombre,$apellidos, $dni, $email, $idGrupo, $nent
         );
 
         $entrada->change_estado(); // Ponemos a "OK" el estado de la entrada
+
     }
-    else
-    {}//sendMessage();
+
 }
