@@ -18,13 +18,61 @@ Class: This is the class you want the log entry to have. Values are: Red, Danger
 Mail: This setting can be yes or no. If it is not specified it will be set to "no".
 
  * */
-
+header("Access-Control-Allow-Origin: *");
 $app = new \Slim\Slim();
 
 $app->get('/concerts', 'getConcerts');
 $app->get('/concerts/:id', 'getConcert');
 $app->get('/concerts/search/:query', 'findByName');
 
+function validateEmail($email) {
+    $app = \Slim\Slim::getInstance();
+    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        $app->stop();
+        return false;
+    }
+    return true;
+
+}
+
+function validarDatosEntrada($entrada)
+{
+
+    global $log;
+    $nombre = $entrada->show_item("nombre");
+    $apellidos = $entrada->show_item("apellidos");
+    $dni = $entrada->show_item("dni");
+    $email = $entrada->show_item("email");
+
+
+    if (helper::verify_dni($dni) != 'OK') {
+
+        $response["error"] = true;
+        $response["message"] = 'DNI no es valido';
+        echoResponse(400, $response);
+        return false;
+    }
+    elseif (strlen($nombre) == 0 && strlen($apellidos) == 0) {
+
+        $response["error"] = true;
+        $response["message"] = 'Nombre o Apellidos incorrecto';
+        echoResponse(400, $response);
+
+        return false;
+    }
+    elseif  (!validateEmail($email)) {
+
+        $msg = "E-mail incorrecta.";
+        $response["error"] = true;
+        $response["message"] = 'Email no es valido';
+        echoResponse(400, $response);
+
+        return false;
+    }
+
+    return true;
+
+}
 
 function echoResponse($status_code, $response) {
     $app = \Slim\Slim::getInstance();
@@ -73,7 +121,7 @@ $app->post('/comprarentrada', function() use ($app) {
 
     $response = array();
 
-    $nombre = "kepa";
+   /* $nombre = "kepa";
     $dni = "20223532T";
     $apellidos = "cantero";
     $email = "kcantero@gmail.com";
@@ -81,7 +129,7 @@ $app->post('/comprarentrada', function() use ($app) {
     $idGrupo =  "2195";
     $nentradas =  "2";
     $grupos= "eskorbuto";
-
+*/
     //echo "aqui-0-";
    $dni = $database->filter( $app->request->post("dni"));
     $apellidos = $database->filter( $app->request->post("apellidos"));
@@ -92,9 +140,10 @@ $app->post('/comprarentrada', function() use ($app) {
      $grupos=$database->filter($app->request->post("grupos"));
 
     $entrada = new sEntrada();
-   crearEntrada($entrada,$nombre,$apellidos, $dni, $email, $idGrupo, $nentradas,$grupos);
-
-    if (validarEntrada($entrada, $log)) {
+    // "kepa0";
+    crearEntrada($entrada,$nombre,$apellidos, $dni, $email, $idGrupo, $nentradas,$grupos);
+   //echo "kepa1";
+    if (validarDatosEntrada($entrada)) {
         if (validarGrupo($idGrupo))
         {
             if (validarEntradaDisponibles($entrada->show_item("id"),$entrada->show_item("nentradas")))
@@ -107,7 +156,7 @@ $app->post('/comprarentrada', function() use ($app) {
             }
             else
             {
-
+                //echo "kepa5";
                 $response["error"] = true;
                 $response["message"] = "No hay entradas disponibles";
                 echoResponse(500, $response);
@@ -118,16 +167,10 @@ $app->post('/comprarentrada', function() use ($app) {
 
             $response["error"] = true;
             $response["message"] = "El grupo no actua en esas fechas";
-            echoResponse(500, $response);
+            echoResponse(501, $response);
         }
     }
-    else
-    {
-        $response["error"] = true;
-        $response["message"] = "Revisa los datos ";
-        echoResponse(500, $response);
 
-    }
 
 });
 
@@ -192,7 +235,6 @@ function findByName($query)
         $log->logg('1', $e->getMessage(), 'High', 'Danger', 'no');
     }
 }
-
 
 
 

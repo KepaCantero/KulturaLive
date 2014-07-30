@@ -29,18 +29,17 @@
 ** ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS 
 ** FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details. 
 **------------------------------------------------------------------------------ */
-/*
+
 define( 'DB_HOST', 'mysql.hostinger.es' ); // set database host
 define( 'DB_USER', "u251348866_root" ); // set database user
 define( 'DB_PASS', "7rosamu5" ); // set database password
 define( 'DB_NAME', 'u251348866_bdpru' ); // set database name
-*/
-
+/*
 define('DB_HOST', "localhost");  //Here goes the server (Normally it will be localhost)
 define('DB_USER', "root");     //Here goes the username
 define('DB_PASS', "7rosamu5");     //The password
 define('DB_NAME', "bdprueba");      //The database name
-
+*/
 
 class DB
 {
@@ -65,7 +64,7 @@ class DB
         $message .= '</p>';
         $message .= '<p>Severity: '. $severity .'</p>';
 
-        mail( SEND_ERRORS_TO, 'Database Error', $message, $headers);
+        //mail( SEND_ERRORS_TO, 'Database Error', $message, $headers);
 
         if( DISPLAY_DEBUG )
         {

@@ -34,8 +34,6 @@ function validarEntradaDisponibles ($idConcierto,$nentradas)
 {
 
     global $database;
-    echo $idConcierto;
-    echo $nentradas;
     $query = "SELECT num_entradas FROM conciertos WHERE id_conciertos= ".$idConcierto;
     $entradas_disponibles=$database->get_row( $query );
     if( $entradas_disponibles[0] > 0 )
@@ -53,37 +51,10 @@ function validarEntradaDisponibles ($idConcierto,$nentradas)
     }
 
 }
-function validarEntrada($entrada)
-{
-
-    global $log;
-    $nombre = $entrada->show_item("nombre");
-    $apellidos = $entrada->show_item("apellidos");
-    $dni = $entrada->show_item("dni");
-    $email = $entrada->show_item("email");
 
 
-    if (helper::verify_dni($dni) != 'OK') {
-        echo "josu0";
-        $msg = "Dni no valido";
-        return false;
-    }
-    elseif (strlen($nombre) == 0 && strlen($apellidos) == 0) {
-        echo "josu1";
-        $msg = ("Nombre o Apellido no correcto");
-        $log->logg('1', $msg, 'Medium', 'Yellow', 'no');
-        return false;
-    } elseif  (!helper::verify_email($email)) {
-        echo $email;
-        $msg = "E-mail incorrecta.";
-        $log->logg('1', $msg, 'Medium', 'Yellow', 'no');
-        echo "josu2";
-        return false;
-    }
-    echo "josu3";
-    return true;
 
-}
+
 
 function crearEntrada($entrada,$nombre,$apellidos, $dni, $email, $idGrupo, $nentradas,$grupos)
 {
