@@ -32,4 +32,4 @@ define('SITE_NAME', "kepa cantero");
 define('EMAIL_FROM_NAME', "admin");
 define('EMAIL_FROM_ADDR', "kepacantero@gmail.com");
 define('EMAIL_TO_ADDR', "kaisersosse@gmail.com");
-?>
+

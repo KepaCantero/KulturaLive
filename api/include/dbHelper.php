@@ -34,13 +34,14 @@ define( 'DB_HOST', 'mysql.hostinger.es' ); // set database host
 define( 'DB_USER', "u251348866_root" ); // set database user
 define( 'DB_PASS', "7rosamu5" ); // set database password
 define( 'DB_NAME', 'u251348866_bdpru' ); // set database name
+
 /*
+
 define('DB_HOST', "localhost");  //Here goes the server (Normally it will be localhost)
 define('DB_USER', "root");     //Here goes the username
 define('DB_PASS', "7rosamu5");     //The password
 define('DB_NAME', "bdprueba");      //The database name
 */
-
 class DB
 {
     private $link;
@@ -175,9 +176,10 @@ class DB
         }
         else
         {
+            mysqli_free_result( $query );
             return true;
         }
-        mysqli_free_result( $query );
+
     }
     
     
@@ -192,15 +194,15 @@ class DB
     public function table_exists( $name )
     {
         $check = $this->link->query("SELECT * FROM '$name' LIMIT 1");
-        if( $check ) 
+
+        $result = false;
+        if( $check )
         {
-            return true;
+            $result = true;
         }
-        else
-        {
-            return false;
-        }
+
         mysqli_free_result( $check );
+        return $result;
     }
     
     
@@ -215,16 +217,18 @@ class DB
     public function num_rows( $query )
     {
         $query = $this->link->query( $query );
+
         if( mysqli_error( $this->link ) )
         {
             $this->log_db_errors( mysqli_error( $this->link ), $query, 'Fatal' );
-            return mysqli_error( $this->link );
+            $result= mysqli_error( $this->link );
         }
         else
         {
-            return mysqli_num_rows( $query );
+            $result= mysqli_num_rows( $query );
         }
         mysqli_free_result( $query );
+        return $result;
     }
     
     
@@ -250,7 +254,7 @@ class DB
         if( empty($table) || empty($check_val) || empty($params) )
         {
             return false;
-            exit;
+
         }
         $check = array();
         foreach( $params as $field => $value )
@@ -282,7 +286,7 @@ class DB
         {
             return true;
         }
-        exit;
+
     }
     
     
@@ -444,7 +448,7 @@ class DB
         
         foreach( $where as $field => $value )
         {
-            $value = $value;
+            //$value = $value;
                 
             $clause[] = "$field = '$value'";
         }
@@ -484,7 +488,7 @@ class DB
         $sql = "DELETE FROM ". $table;
         foreach( $where as $field => $value )
         {
-            $value = $value;
+          //  $value = $value;
             $clause[] = "$field = '$value'";
         }
         $sql .= " WHERE ". implode(' AND ', $clause);
@@ -533,8 +537,10 @@ class DB
     public function num_fields( $query )
     {
         $query = $this->link->query( $query );
-        return mysqli_num_fields( $query );
+        $result=mysqli_num_fields( $query );
         mysqli_free_result( $query );
+        return $result;
+
     }
     
     /**
@@ -547,8 +553,10 @@ class DB
     public function list_fields( $query )
     {
         $query = $this->link->query( $query );
-        return mysqli_fetch_fields( $query );
+        $result= mysqli_fetch_fields( $query );
         mysqli_free_result( $query );
+        return $result;
+
     }
     
     
@@ -628,4 +636,3 @@ class DB
 /* Create database connection */
 $database = new DB;
 
-?>

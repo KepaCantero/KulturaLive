@@ -13,4 +13,3 @@ include('constantsLogger.php');
 $log= new Logs;
 
 
-?>
