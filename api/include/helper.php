@@ -10,10 +10,6 @@ class Helper
 
     public static function verify_dni($dni)
     {
-        if (strlen($dni) < 9) {
-            echo "DNI demasiado corto.";
-        }
-
         $dni = strtoupper($dni);
 
         $letra = substr($dni, -1, 1);
@@ -25,13 +21,11 @@ class Helper
         $modulo = $numero % 23;
         $letras_validas = "TRWAGMYFPDXBNJZSQVHLCKE";
         $letra_correcta = substr($letras_validas, $modulo, 1);
-
-        if ($letra_correcta != $letra) {
-            echo "Letra incorrecta, la letra deber&iacute;a ser la $letra_correcta.";
+        if ($letra_correcta != $letra || (strlen($dni) < 9))
             return false;
-        } else {
+        else
             return true;
-        }
+
     }
     public static function echoResponse($status_code, $response) {
         $app = \Slim\Slim::getInstance();
@@ -40,6 +34,15 @@ class Helper
         // setting response content type to json
         $app->contentType('application/json');
         echo json_encode($response);
+    }
+
+        // FUNCI�N PARA OBTENER FECHA ACTUAL EN FORMATO CODIFICACI�N LARGA
+    public static function fechaActual() {
+
+        //$FECHAACTUAL = mktime (date("H"),date("i"),00,date("n"),date("d"),date("Y"),$datoActual);
+        $FECHAACTUAL = mktime (date("H"),date("i"),00,date("n"),date("d"),date("Y"));
+
+        return ($FECHAACTUAL);
     }
 
     public static function  sql_quote($val){

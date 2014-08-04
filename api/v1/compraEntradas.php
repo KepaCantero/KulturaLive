@@ -15,7 +15,7 @@ function validarGrupo($idGroup)
     $query = "SELECT * FROM conciertos c, conciertos_descripcion cd, salas s
 							WHERE cd.id_conciertos=c.id_conciertos AND cd.idioma ='cas'
 							AND c.id_sala = s.id_sala
-							AND c.codigo_fecha >= CURRENT_DATE()
+							AND c.codigo_fecha >= ".helper::fechaActual()."
 							AND c.visible = 'Si'
 							AND c.entrada_inet = 1
 							AND c.num_entradas > 0
@@ -60,7 +60,7 @@ function validarEntradaDisponibles($idConcierto, $nentradas)
 function validarDatosEntrada($entrada)
 {
 
-    global $log;
+
     global $app;
     $nombre = $entrada->show_item("nombre");
     $apellidos = $entrada->show_item("apellidos");
@@ -75,7 +75,8 @@ function validarDatosEntrada($entrada)
         helper::echoResponse(400, $response);
         $app->stop();
 
-    } elseif (strlen($nombre) == 0 && strlen($apellidos) == 0) {
+    } else
+    if (strlen($nombre) == 0 && strlen($apellidos) == 0) {
 
         $response["error"] = true;
         $response["message"] = 'Nombre o Apellidos incorrecto';
@@ -103,16 +104,19 @@ function crearEntrada($entrada, $nombre, $apellidos, $dni, $email, $idGrupo, $ne
     $grupo_sin_espacios = str_replace("+", "", $grupo_sin_espacios);
     $grupo_sin_espacios = strtoupper(substr($grupo_sin_espacios, 0, 5));
     global $database;
-
+    global $app;
+    global $log;
 
     $query = "SELECT precio_ant,precio_comision,printathome FROM conciertos c, conciertos_descripcion cd, salas s
 							WHERE cd.id_conciertos=c.id_conciertos AND cd.idioma ='cas'
 							AND c.id_sala = s.id_sala
-							AND c.codigo_fecha >= CURRENT_DATE()
+							AND c.codigo_fecha >= ".helper::fechaActual()."
 							AND c.visible = 'Si'
 							AND c.entrada_inet = 1
 							AND c.num_entradas > 0
 							AND c.id_conciertos =" . $idGrupo;
+
+
 
 
     $grupo_disponible = $database->num_rows($query);
@@ -134,28 +138,59 @@ function crearEntrada($entrada, $nombre, $apellidos, $dni, $email, $idGrupo, $ne
             $precio_ant,
             $precio_comision,
             $printathome
-        );
 
+        );
         $entrada->change_estado(); // Ponemos a "OK" el estado de la entrada
+    }
+    else
+    {
+        $response["error"] = true;
+        $response["message"] = 'Error en la BD';
+        helper::echoResponse(400, $response);
+        $log->logg('1', 'Error en la BD, no se ha podido crear la entrada. query: '.$query , 'High', 'Danger', 'no');
+        $app->stop();
 
     }
 
 }
+
 function insertarEntrada($entrada)
 {
-
+    global $Clave , $MerchantID, $AcquirerBIN, $TerminalID;
+    global $Tipomoneda,$Exponente,$Referencia,$Cifrado,$URL_OK,$URL_NOK;
     global $database;
     global $app;
-    $fechaActual 	= 'CURRENT_DATE()';
-    $nombreCompleto = $entrada->show_item("nombre")." ".$entrada->show_item("apellidos");
-    $nombre			= $entrada->show_item('nombre');
-    $apellidos 		= $entrada->show_item('apellidos');
-    $dni 			= $entrada->show_item('dni');
-    $email 			= $entrada->show_item('email');
-    $nentradas 		= $entrada->show_item('nentradas');
-    $id 			= $entrada->show_item('id');
-    $printathome	= $entrada->show_item('printathome');
 
+    $amount = $entrada->show_item("importe") * 100;
+
+			// Generaci�n del numero de pedido:
+	$xidconcierto = $entrada->show_item("id");
+	$xmes = date('m');
+	$xdia = date('d');
+	$xfecha = date('ymdHis');
+
+	$xvaleatorio = rand(10000, 99999);
+
+	// N�mero de operaci�n
+	$Num_operacion = $xidconcierto."_".$xfecha."_".$xvaleatorio."_".$entrada->show_item("grupos");
+
+	// Importe total
+	$Importe = $amount;
+
+	//$string = "cgi-bin/calculo  $Clave $MerchantID $AcquirerBIN $TerminalID $Num_operacion $Importe $Tipomoneda $Exponente \"\"";
+	//$resultado = exec($string);
+
+	$resultado = sha1($Clave.$MerchantID.$AcquirerBIN.$TerminalID.$Num_operacion.$Importe.$Tipomoneda.$Exponente.$Referencia.$Cifrado.$URL_OK.$URL_NOK);
+
+	$fechaActual 	= helper::fechaActual();
+	$nombreCompleto = $entrada->show_item("nombre")." ".$entrada->show_item("apellidos");
+	$nombre			= $entrada->show_item('nombre');
+	$apellidos 		= $entrada->show_item('apellidos');
+	$dni 			= $entrada->show_item('dni');
+	$email 			= $entrada->show_item('email');
+	$nentradas 		= $entrada->show_item('nentradas');
+	$id 			= $entrada->show_item('id');
+	$printathome	= $entrada->show_item('printathome');
 
 
     $entrada_values = array(
@@ -179,9 +214,10 @@ function insertarEntrada($entrada)
         $response["message"] = 'No ha sido posible actualizar la BD con la nueva entrada';
         helper::echoResponse(400, $response);
         $app->stop();
+
     }
 
     # Vaciamos la entrada
-    $entrada->clear();
+
 
 }

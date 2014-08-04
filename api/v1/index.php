@@ -4,7 +4,6 @@ require_once '../include/helper.php';
 require_once '../include/logInit.php';
 require_once '../include/dbHelper.php';
 require_once '../include/Entrada.php';
-require_once '../include/funciones.php';
 require '.././libs/Slim/Slim.php';
 require_once 'compraEntradas.php';
 
@@ -24,6 +23,8 @@ $app = new \Slim\Slim();
 
 $app->get('/concerts', 'getConcerts');
 $app->get('/salas', 'getSalas');
+$app->get('/concertsCarrousel', 'getConcertsCarrousel');
+
 
 function validateEmail($email)
 {
@@ -66,24 +67,15 @@ function verifyRequiredParams($required_fields)
     }
 }
 
-$app->post('/comprarEntrada', function () use ($app) {
+$app->post('/veryfyTicket', function () use ($app) {
     // check for required params
     global $database;
-    global $log;
 
     verifyRequiredParams(array('nombre', 'apellidos', 'dni', 'email','nentradas', 'idGrupo','grupos'));
 
     $response = array();
 
-    /* $nombre = "kepa";
-     $dni = "20223532T";
-     $apellidos = "cantero";
-     $email = "kcantero@gmail.com";
 
-     $idGrupo =  "2195";
-     $nentradas =  "2";
-     $grupos= "eskorbuto";
- */
     //echo "aqui-0-";
     $dni = $database->filter($app->request->post("dni"));
     $apellidos = $database->filter($app->request->post("apellidos"));
@@ -93,10 +85,11 @@ $app->post('/comprarEntrada', function () use ($app) {
     $nentradas = $database->filter($app->request->post("nentradas"));
     $grupos = $database->filter($app->request->post("grupos"));
 
+
+
     $entrada = new sEntrada();
-    // "kepa0";
+
     crearEntrada($entrada, $nombre, $apellidos, $dni, $email, $idGrupo, $nentradas, $grupos);
-    //echo "kepa1";
 
     validarDatosEntrada($entrada);
     validarGrupo($idGrupo);
@@ -104,10 +97,37 @@ $app->post('/comprarEntrada', function () use ($app) {
     insertarEntrada($entrada);
     $response["error"] = false;
     $response["message"] = "La entrada esta validada";
+    $response["entrada"] = array();
+    $response["entrada"] = $entrada;
     helper::echoResponse(200, $response);
 
+});
 
 
+
+$app->get('/getConcertDetails/:id/', function ($id) use ($app) {
+
+    global $database;
+    global $log;
+
+    try {
+
+        $query = "SELECT id_conciertos,grupos,nombre_sala,codigo_fecha,precio_ant,precio_taq,imagen FROM conciertos c INNER JOIN salas s ON c.id_sala = s.id_sala WHERE id_conciertos = " .$id;
+
+        $response["error"] = false;
+        $response["concert"] = array();
+
+        $concert = $database->get_results($query);
+
+        $response["concert"] = $concert;
+
+        helper::echoResponse(200, $response);
+
+
+    } catch (PDOException $e) {
+        $log->logg('1', $e->getMessage(), 'High', 'Danger', 'no');
+
+    }
 });
 
 $app->get('/getConcertDetails/:id/', function ($id) use ($app) {
@@ -142,7 +162,9 @@ $app->get('/busqueda-concert/:text/', function ($text) use ($app) {
 
     try {
 
-        $query = "SELECT id_conciertos,grupos,nombre_sala,codigo_fecha,precio_ant,precio_taq,imagen FROM conciertos c INNER JOIN salas s ON c.id_sala = s.id_sala WHERE c.grupos LIKE '%" .$text. "%' OR s.nombre_sala LIKE '%" .$text. "%' ORDER BY codigo_fecha";
+        $query = "SELECT id_conciertos,grupos,nombre_sala,codigo_fecha,precio_ant,precio_taq,imagen FROM conciertos c INNER JOIN salas s ON c.id_sala = s.id_sala WHERE "
+                 ."AND c.codigo_fecha >= " . helper::fechaActual()
+                 ." c.grupos LIKE '%" .$text. "%' OR s.nombre_sala LIKE '%" .$text. "%' ORDER BY codigo_fecha";
 
         $response["error"] = false;
         $response["concerts"] = array();
@@ -187,14 +209,41 @@ $app->get('/detalle-sala/:id/', function ($id) use ($app) {
 
 $app->run();
 
+function getConcertsCarrousel()
+{
+    global $database;
+    global $log;
+    try {
+
+        $query = "SELECT * FROM conciertos c, salas s  WHERE c.id_sala = s.id_sala  AND c.codigo_fecha >= " . helper::fechaActual() . "  AND c.visible='Si'  AND c.destacado = 1   ORDER BY c.codigo_fecha ASC ";
+
+
+        $response["error"] = false;
+        $response["concerts"] = array();
+
+        $concerts = $database->get_results($query);
+
+        $response["concerts"] = $concerts;
+
+        //$response["concerts"] = json_encode($concerts);
+        helper::echoResponse(200, $response);
+
+
+    } catch (PDOException $e) {
+        $log->logg('1', $e->getMessage(), 'High', 'Danger', 'no');
+
+    }
+}
 
 function getConcerts()
 {
     global $database;
     global $log;
     try {
-
-        $query = "SELECT id_conciertos,grupos,nombre_sala,codigo_fecha,precio_ant,precio_taq,imagen FROM conciertos c INNER JOIN salas s ON c.id_sala = s.id_sala ORDER BY codigo_fecha";
+        echo "hola";
+        $query = "SELECT id_conciertos,grupos,nombre_sala,codigo_fecha,precio_ant,precio_taq,imagen FROM conciertos c INNER JOIN salas s ON c.id_sala = s.id_sala WHERE "
+                 ." c.codigo_fecha >= " . helper::fechaActual()
+                 ." ORDER BY codigo_fecha";
 
         $response["error"] = false;
         $response["concerts"] = array();
