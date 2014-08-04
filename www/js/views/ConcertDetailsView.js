@@ -1,4 +1,4 @@
-var ConcertDetailsView = function(template, employee,concerDetails) {
+var ConcertDetailsView = function(template, concert) {
 
     this.initialize = function() {
         this.el = $('<div/>');
@@ -9,7 +9,7 @@ var ConcertDetailsView = function(template, employee,concerDetails) {
     };
 
     this.render = function() {
-        this.el.html(template(employee));
+        this.el.html(template(concert));
         return this;
     };
 

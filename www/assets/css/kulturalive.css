@@ -186,29 +186,125 @@ dd {
 	background:transparent;
 }
 
+
+/*******************/
+/*RESPONSIVE SLIDES*/
+/*******************/
+
+.rslides {
+  position: relative;
+  list-style: none;
+  overflow: hidden;
+  width: 100%;
+  padding: 0;
+  margin: 0;
+  }
+
+.rslides li {
+  -webkit-backface-visibility: hidden;
+  position: absolute;
+  display: none;
+  width: 100%;
+  left: 0;
+  top: 0;
+  }
+
+.rslides li:first-child {
+  position: relative;
+  display: block;
+  float: left;
+  }
+
+.rslides img {
+  display: block;
+  height: auto;
+  float: left;
+  width: 100%;
+  border: 0;
+  }
+
+
+
 /*********************/
 /*LISTA DE CONCIERTOS*/
 /*********************/
 
+.header-fijo {
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+}
+
+.content-conciertos {
+	/*overflow-y: scroll;*/
+}
+
+#busquedaConciertos {
+	background-color: black;
+	width: 100%;
+	height: auto;
+	text-align: center;
+	display: none;
+}
+
+#boxBusqueda {
+	width: 100%;
+	display: block;
+	overflow: hidden;
+	background-color: black;
+	
+}
+
+#inputBusqConciertos {
+	float: left;
+	margin: 0.5em 0 0.5em 0;
+}
+
+#butBusqConciertos {
+	float: left;
+	margin: 0.5em 0 0.5em 0;
+}
+
+
 #fotorama {
 	width: 100%;
+	height: 7em;
 	margin: 1em auto 1em auto;
-	padding: 0.5em 0px 0.5em 0px;
-	display: block;
-	overflow:auto;
+	/*padding: 0.5em 0.5em 0.5em 0.5em;*/
+	/*display: block;
+	overflow:auto;*/
 	background-color: #e5e9e8;
 }
 
 .boxImgFotorama {
-	padding: 0 1em 0 0;
-	max-width: 30%;
 	float: left;
+	width: 25%;
+	max-height: 6em;
+	margin: 0 0.5em 0em 0;
+	/*display: block;
+	overflow: auto;*/
+}
+
+.imgFotorama {
+	max-width: 100%;
+	max-height: 100%;
+	
+	/*width: auto;
+	height: auto;*/
 }
 
 .boxItemFotorama {
 /*Este overflow hidden sirve para que el contenido de este div, que va a la derecha, ocupe todo lo que no ocupe boxLi*/
 	overflow: hidden;
-	float: left;
+	/*float: left;*/
+	/*display: block;
+	overflow: auto;*/
+	margin-right: 0.5em;
+}
+
+.enlaceFotorama {
+	width: 100%;
 	display: block;
 	overflow: auto;
 }
@@ -220,21 +316,21 @@ dd {
 	overflow: auto;
 }
 
-.imgFotorama {
-	max-width: 100%;
-}
-
 .itemBandFotorama {
-	font: bold 1.2em sans-serif;
+	font: bold 1em sans-serif;
+	height: 2.2em;
 	padding-bottom: 0.3em;
 	width: 100%;
-	display: block;
-	overflow: auto;
+	overflow: hidden;
+	/*display: block;
+	overflow: auto;*/
 	color:#445566;
 }
 
 .itemSalaFotorama {
-	font: bold 1.1em sans-serif;
+	font: bold 1em sans-serif;
+	height: 2.2em;
+	overflow: hidden;
 	width: 100%;
 	padding-bottom: 0.3em;
 	color: black;
@@ -243,17 +339,16 @@ dd {
 .itemDateFotorama {
 	float: left;
 	width: 100%;
-	font: bold 1em sans-serif;
+	font: bold 0.9em sans-serif;
 	color:#445566;	
 }
 
 .itemPrecioFotorama {
 	float: left;
 	width: 100%;
-	font: bold 1.1em sans-serif;
+	font: bold 1em sans-serif;
 	color: black;
 }
-
 
 
 .listBox {
@@ -302,6 +397,10 @@ dd {
   line-height: 1.4em;
 }
 
+.container-salas {
+	margin-top: 1em;
+}
+
 .itemBox{
 	display:block; 
 	overflow:auto;
@@ -318,18 +417,18 @@ dd {
 
 .boxItem {
 /*Este overflow hidden sirve para que el contenido de este div, que va a la derecha, ocupe todo lo que no ocupe boxLi*/
-	overflow: hidden;
+	overflow: hidden;	
 }
 
 .itemBand {
-	font: bold 1.2em sans-serif;
+	font: bold 1em sans-serif;
 	padding-bottom: 0.3em;
 	display: block;
 	overflow: auto;
 }
 
 .itemSala {
-	font: bold 1.1em sans-serif;
+	font: bold 0.9em sans-serif;
 	padding-bottom: 0.3em;
 	color: black;
 }
@@ -350,9 +449,23 @@ dd {
 .itemPrecio {
 	float: left;
 	width: 50%;
-	font: bold 1.1em sans-serif;
+	font: bold 1em sans-serif;
 	color: black;
 }
+
+.flechaItem {
+	height: 1.5em;
+	width: 1.5em;
+	position: absolute;
+	right: 0.4em;
+	/*top: 5em;*/
+}
+
+#imgFlechaItem {
+	max-height: 1.5em;
+	max-width: 1.5em;
+}
+
 
 /***********************/
 /*DETALLE DE CONCIERTOS*/
@@ -369,14 +482,15 @@ dd {
 
 .detailImageBox {
 	max-width:50%;
+	max-height: 40%;
 	margin-left:auto;
 	margin-right:auto;	
 	padding:0.5em 0 0.5em 0;
-	max-height:10%;
 }
 
 .detail-image {
-	width: 100%;
+	max-width: 75%;
+	max-height: 100%;
 	padding-top: 0.5em;
 	padding-bottom: 0.5em;
 	text-align: center;
@@ -385,15 +499,15 @@ dd {
 .detailBand {
 	width: 100%;
 	text-align: center;
-	font: bold 1.5em sans-serif;
-	padding-bottom: 0.5em;
+	font: bold 1.3em sans-serif;
+	padding-bottom: 0.4em;
 	color:#445566;
 }
 
 .detailSala {
 	width: 100%;
 	text-align: center;
-	font: bold 1.4em sans-serif;
+	font: bold 1.2em sans-serif;
 	padding-bottom: 0.5em;
 	color: black;
 }
@@ -401,17 +515,21 @@ dd {
 .detailDate {
 	width: 100%;
 	text-align: center;
-	font: bold 1.3em sans-serif;
-	padding-bottom: 0.4em;
+	font: bold 1.1em sans-serif;
+	padding-bottom: 0.3em;
 	color:#445566;	
 }
 
 .detailHour {
 	width: 100%;
 	text-align: center;
-	font: bold 1.4em sans-serif;
-	padding-bottom: 0.5em;
+	font: bold 1.2em sans-serif;
+	padding-bottom: 0.4em;
 	color: black;
+}
+
+.imgDetalle {
+	width: 75%;
 }
 
 /************/

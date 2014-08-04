@@ -27,7 +27,7 @@
                 window.alert = function(message) {
                      navigator.notification.alert(message, // message
                          null, // callback
-                         "Workshop", // title
+                         "Kultura Live", // title
                          'OK' // buttonName
                      );
 		        };
@@ -86,6 +86,7 @@
 			var userForm = /^#mainMenu\/userForm/;
 			var ticketDetails = /^#mainMenu\/ticketDetails/;
             var listadoSalas = /^#mainMenu\/salas/;
+            var detalleSalas = /^#mainMenu\/salas\/(\d{1,})/;
             
 			var dummyDetallesAnuncio = /^#mainMenu\/detallesAnuncio/;
 			
@@ -107,10 +108,17 @@
 				return;
 			}
             
-            var match = hash.match(dummySalaURL);
+            /*var match = hash.match(dummySalaURL);
 			if (match) {
 				console.log("toDummySala");
 			    controller.LoadDummySala();
+				return;
+			}*/
+            
+            var match = hash.match(detalleSalas);
+			if (match) {
+				console.log("todetalleSalas");
+			    controller.LoadDetalleSala(match[1]);
 				return;
 			}
             
@@ -120,7 +128,7 @@
 			    controller.LoadAllSalas();
 				return;
 			}
-            
+			
             var match = hash.match(ticketDetails);
 			if (match) {
 				console.log("toTicketDetails");

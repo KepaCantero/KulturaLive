@@ -141,3 +141,47 @@ function crearEntrada($entrada, $nombre, $apellidos, $dni, $email, $idGrupo, $ne
     }
 
 }
+function insertarEntrada($entrada)
+{
+
+    global $database;
+    global $app;
+    $fechaActual 	= 'CURRENT_DATE()';
+    $nombreCompleto = $entrada->show_item("nombre")." ".$entrada->show_item("apellidos");
+    $nombre			= $entrada->show_item('nombre');
+    $apellidos 		= $entrada->show_item('apellidos');
+    $dni 			= $entrada->show_item('dni');
+    $email 			= $entrada->show_item('email');
+    $nentradas 		= $entrada->show_item('nentradas');
+    $id 			= $entrada->show_item('id');
+    $printathome	= $entrada->show_item('printathome');
+
+
+
+    $entrada_values = array(
+        'num_operacion' => $Num_operacion,
+        'nombre' =>$nombreCompleto, //Random thing to insert
+        'nombreN' =>$nombre, //Random thing to insert
+        'apellidos' =>$apellidos, //Random thing to insert
+        'dni' =>$dni, //Random thing to insert
+        'email' =>$email, //Random thing to insert
+        'nentradas' =>$nentradas, //Random thing to insert
+        'id_conciertos' => $id,
+        'codigo_fecha_entradas' => $fechaActual,
+        'confirmada' =>'0',
+        'printathome' => $printathome
+    );
+
+    $insert_query = $database->insert( 'entradas', $entrada_values );
+    if(! $insert_query )
+    {
+        $response["error"] = true;
+        $response["message"] = 'No ha sido posible actualizar la BD con la nueva entrada';
+        helper::echoResponse(400, $response);
+        $app->stop();
+    }
+
+    # Vaciamos la entrada
+    $entrada->clear();
+
+}

@@ -1,4 +1,4 @@
-var ListConcertsView = function(db, template, listItemTemplate) {
+var ListConcertsView = function(controller, template, listItemTemplate) {
 
 	this.initialize = function() {
 		// Define a div wrapper for the view. The div wrapper is used to attach events.
@@ -7,24 +7,30 @@ var ListConcertsView = function(db, template, listItemTemplate) {
 
 		//Esto hace que al cambiar de página se vaya a la parte de arriba.
 		window.scrollTo(0, 0);
-		//$('html,body').scrollTop(0);
 
 		this.el.on('click', '#buttonSearch', function() {
-			if (cuerpo.hasClass('left-nav')) {
+			/*if (cuerpo.hasClass('left-nav')) {
 				$('.side-nav').css("display", "none");
 				cuerpo.removeClass('left-nav');
 			}
 			
 			db.findByName($('#inputPelicula').val(), $('#inputId').val(), $('#inputFecha').val(),0,10).done(function(concerts) {
-				$('.employee-list').html(listItemTemplate(concerts));
-			});		
+				$('.lista-conciertos').html(listItemTemplate(concerts));
+			});
+			
+			$.ajax({
+		        type: 'GET',
+		        url: 'http://kometa.esy.es/api/v1/concerts',
+		        dataType: "json",
+		        success: function(data){
+		            $('.lista-conciertos').html(listItemTemplate(data));
+		        }
+		    });*/
+					
 		});
 
 		this.el.on('click', '.back-button', function(event) {
-			//history.go(-1);
 			window.history.back();
-			/*event.preventDefault();
-    		history.back(1);*/
 		});
 		
 		this.el.on("click", "img", function(){                
@@ -41,12 +47,20 @@ var ListConcertsView = function(db, template, listItemTemplate) {
        });
 
 		this.el.on('click', '#slide-menu-button', function() {			
-			if (cuerpo.hasClass('left-nav')) {
-				$('.side-nav').css("display", "none");
-				cuerpo.removeClass('left-nav');
+			if ( $('#busquedaConciertos').css("display") == "block" ){
+				$('#busquedaConciertos').css("display", "none");
+				//alert("block");
 			} else {
-				$('.side-nav').css("display", "block");
-				cuerpo.addClass('left-nav');				
+				$('#busquedaConciertos').css("display", "block");
+				//alert("none");
+			}
+		});
+		
+		this.el.on('click', '#butBusqConciertos', function() {
+			if ($('#inputBusqConciertos').val() != ""){
+				$('#busquedaConciertos').css("display", "none");
+				controller.findByName( $('#inputBusqConciertos').val() );
+				$('#inputBusqConciertos').val("");
 			}
 		});
 	};
@@ -55,12 +69,17 @@ var ListConcertsView = function(db, template, listItemTemplate) {
 		this.el.html(template());
 		return this;
 	};
-
-	this.findByName = function() {
-		db.findByName($('#inputPelicula').val(), $('#inputId').val(), $('#inputFecha').val(), 0, 10).done(function(concerts) {
-			$('.employee-list').html(listItemTemplate(concerts));
-		});
-	};
+	
+	/*this.findByName = function() {
+		$.ajax({
+	        type: 'GET',
+	        url: 'http://kometa.esy.es/api/v1/concerts',
+	        dataType: "json",
+	        success: function(data){
+	            $('.lista-conciertos').html(listItemTemplate(data));
+	        }
+	    });
+    };*/
 
 	this.initialize();
 

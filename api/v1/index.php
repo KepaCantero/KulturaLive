@@ -4,6 +4,7 @@ require_once '../include/helper.php';
 require_once '../include/logInit.php';
 require_once '../include/dbHelper.php';
 require_once '../include/Entrada.php';
+require_once '../include/funciones.php';
 require '.././libs/Slim/Slim.php';
 require_once 'compraEntradas.php';
 
@@ -22,8 +23,7 @@ header("Access-Control-Allow-Origin: *");
 $app = new \Slim\Slim();
 
 $app->get('/concerts', 'getConcerts');
-$app->get('/concerts/:id', 'getConcert');
-$app->get('/concerts/search/:query', 'findByName');
+$app->get('/salas', 'getSalas');
 
 function validateEmail($email)
 {
@@ -35,7 +35,6 @@ function validateEmail($email)
     return true;
 
 }
-
 
 function verifyRequiredParams($required_fields)
 {
@@ -67,7 +66,7 @@ function verifyRequiredParams($required_fields)
     }
 }
 
-$app->post('/comprarentrada', function () use ($app) {
+$app->post('/comprarEntrada', function () use ($app) {
     // check for required params
     global $database;
     global $log;
@@ -102,20 +101,101 @@ $app->post('/comprarentrada', function () use ($app) {
     validarDatosEntrada($entrada);
     validarGrupo($idGrupo);
     validarEntradaDisponibles($entrada->show_item("id"), $entrada->show_item("nentradas"));
+    insertarEntrada($entrada);
     $response["error"] = false;
     $response["message"] = "La entrada esta validada";
     helper::echoResponse(200, $response);
 
 
+
+});
+
+$app->get('/getConcertDetails/:id/', function ($id) use ($app) {
+
+    global $database;
+    global $log;
+
+    try {
+
+        $query = "SELECT id_conciertos,grupos,nombre_sala,codigo_fecha,precio_ant,precio_taq,imagen FROM conciertos c INNER JOIN salas s ON c.id_sala = s.id_sala WHERE id_conciertos = " .$id;
+
+        $response["error"] = false;
+        $response["concert"] = array();
+
+        $concert = $database->get_results($query);
+
+        $response["concert"] = $concert;
+
+        helper::echoResponse(200, $response);
+
+
+    } catch (PDOException $e) {
+        $log->logg('1', $e->getMessage(), 'High', 'Danger', 'no');
+
+    }
+});
+
+$app->get('/busqueda-concert/:text/', function ($text) use ($app) {
+
+    global $database;
+    global $log;
+
+    try {
+
+        $query = "SELECT id_conciertos,grupos,nombre_sala,codigo_fecha,precio_ant,precio_taq,imagen FROM conciertos c INNER JOIN salas s ON c.id_sala = s.id_sala WHERE c.grupos LIKE '%" .$text. "%' OR s.nombre_sala LIKE '%" .$text. "%' ORDER BY codigo_fecha";
+
+        $response["error"] = false;
+        $response["concerts"] = array();
+
+        $concerts = $database->get_results($query);
+
+        $response["concerts"] = $concerts;
+
+        helper::echoResponse(200, $response);
+
+
+    } catch (PDOException $e) {
+        $log->logg('1', $e->getMessage(), 'High', 'Danger', 'no');
+
+    }
+});
+
+$app->get('/detalle-sala/:id/', function ($id) use ($app) {
+
+    global $database;
+    global $log;
+
+    try {
+
+        $query = "SELECT id_sala,nombre_sala,ciudad_sala,comunidad_sala,logo_sala FROM salas WHERE id_sala = " .$id;
+
+        $response["error"] = false;
+        $response["sala"] = array();
+
+        $sala = $database->get_results($query);
+
+        $response["sala"] = $sala;
+
+        helper::echoResponse(200, $response);
+
+
+    } catch (PDOException $e) {
+        $log->logg('1', $e->getMessage(), 'High', 'Danger', 'no');
+
+    }
 });
 
 $app->run();
+
+
 function getConcerts()
 {
     global $database;
     global $log;
     try {
-        $query = "select id_conciertos,id_sala,codigo_fecha,ciudad,sala,precio_ant,precio_taq,imagen FROM conciertos ORDER BY grupos";
+
+        $query = "SELECT id_conciertos,grupos,nombre_sala,codigo_fecha,precio_ant,precio_taq,imagen FROM conciertos c INNER JOIN salas s ON c.id_sala = s.id_sala ORDER BY codigo_fecha";
+
         $response["error"] = false;
         $response["concerts"] = array();
 
@@ -133,43 +213,26 @@ function getConcerts()
     }
 }
 
-function getConcert($id)
+function getSalas()
 {
-    global $database;
-    global $log;
-    $query = "SELECT id_conciertos,id_sala,codigo_fecha,ciudad,sala,precio_ant,precio_taq,imagen FROM conciertos WHERE" . $id;
-
-    if ($database->num_rows($query) > 0) {
-        $response["error"] = false;
-        $response["concerts"] = array();
-        $response["concerts"] = $database->get_row($query);
-        helper::echoResponse(200, $response);
-
-    } else {
-        $log->logg('1', "No results in GetConcerts with id:" . $id, 'High', 'Danger', 'no');
-    }
-
-}
-
-
-function findByName($query)
-{
-   /* $sql = "SELECT * FROM concerts WHERE UPPER(name) LIKE :query ORDER BY name";
     global $database;
     global $log;
     try {
 
-        $stmt = $database->prepare($sql);
-        $query = "%" . $query . "%";
-        $stmt->bindParam("query", $query);
-        $stmt->execute();
-        $concerts = $stmt->fetchAll(PDO::FETCH_OBJ);
-        $db = null;
-        echo '{"concert": ' . json_encode($concerts) . '}';
+        $query = "SELECT id_sala,nombre_sala,ciudad_sala,comunidad_sala,logo_sala FROM salas ORDER BY nombre_sala";
+
+        $response["error"] = false;
+        $response["salas"] = array();
+
+        $salas = $database->get_results($query);
+
+        $response["salas"] = $salas;
+
+        helper::echoResponse(200, $response);
+
+
     } catch (PDOException $e) {
         $log->logg('1', $e->getMessage(), 'High', 'Danger', 'no');
+
     }
-   */
 }
-
-
