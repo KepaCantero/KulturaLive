@@ -67,7 +67,7 @@ function verifyRequiredParams($required_fields)
     }
 }
 
-$app->post('/veryfyTicket', function () use ($app) {
+$app->post('/verifyTicket', function () use ($app) {
     // check for required params
     global $database;
 
