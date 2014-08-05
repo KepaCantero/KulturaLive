@@ -95,40 +95,10 @@ $app->post('/veryfyTicket', function () use ($app) {
     validarGrupo($idGrupo);
     validarEntradaDisponibles($entrada->show_item("id"), $entrada->show_item("nentradas"));
     insertarEntrada($entrada);
-    $response["error"] = false;
-    $response["message"] = "La entrada esta validada";
-    $response["entrada"] = array();
-    $response["entrada"] = $entrada;
-    helper::echoResponse(200, $response);
+
 
 });
 
-
-
-$app->get('/getConcertDetails/:id/', function ($id) use ($app) {
-
-    global $database;
-    global $log;
-
-    try {
-
-        $query = "SELECT id_conciertos,grupos,nombre_sala,codigo_fecha,precio_ant,precio_taq,imagen FROM conciertos c INNER JOIN salas s ON c.id_sala = s.id_sala WHERE id_conciertos = " .$id;
-
-        $response["error"] = false;
-        $response["concert"] = array();
-
-        $concert = $database->get_results($query);
-
-        $response["concert"] = $concert;
-
-        helper::echoResponse(200, $response);
-
-
-    } catch (PDOException $e) {
-        $log->logg('1', $e->getMessage(), 'High', 'Danger', 'no');
-
-    }
-});
 
 $app->get('/getConcertDetails/:id/', function ($id) use ($app) {
 
@@ -215,9 +185,10 @@ function getConcertsCarrousel()
     global $log;
     try {
 
-        $query = "SELECT * FROM conciertos c, salas s  WHERE c.id_sala = s.id_sala  AND c.codigo_fecha >= " . helper::fechaActual() . "  AND c.visible='Si'  AND c.destacado = 1   ORDER BY c.codigo_fecha ASC ";
+        //$query = "SELECT * FROM conciertos c, salas s  WHERE c.id_sala = s.id_sala  AND c.codigo_fecha >= " . helper::fechaActual() . "  AND c.visible='Si'  AND c.destacado = 1   ORDER BY c.codigo_fecha ASC ";
+        $query = "SELECT * FROM conciertos c, salas s  WHERE c.id_sala = s.id_sala   AND c.visible='Si' "." AND c.destacado = 1   ORDER BY c.codigo_fecha ASC ";
 
-
+        echo $query;
         $response["error"] = false;
         $response["concerts"] = array();
 

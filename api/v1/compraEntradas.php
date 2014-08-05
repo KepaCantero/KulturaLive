@@ -1,6 +1,6 @@
 <?php
 
-
+require_once '../include/tvpConfig.php';
 
 //Function to check if the request is an AJAX request
 function is_ajax()
@@ -12,7 +12,7 @@ function validarGrupo($idGroup)
 {
     global $database;
     global $app;
-    $query = "SELECT * FROM conciertos c, conciertos_descripcion cd, salas s
+  /*  $query = "SELECT * FROM conciertos c, conciertos_descripcion cd, salas s
 							WHERE cd.id_conciertos=c.id_conciertos AND cd.idioma ='cas'
 							AND c.id_sala = s.id_sala
 							AND c.codigo_fecha >= ".helper::fechaActual()."
@@ -20,7 +20,14 @@ function validarGrupo($idGroup)
 							AND c.entrada_inet = 1
 							AND c.num_entradas > 0
 							AND c.id_conciertos =" . $idGroup;
-
+*/
+    $query = "SELECT * FROM conciertos c, conciertos_descripcion cd, salas s
+							WHERE cd.id_conciertos=c.id_conciertos AND cd.idioma ='cas'
+							AND c.id_sala = s.id_sala
+							AND c.visible = 'Si'
+							AND c.entrada_inet = 1
+							AND c.num_entradas > 0
+							AND c.id_conciertos =" . $idGroup;
 
     $grupo_disponible = $database->num_rows($query);
     if ($grupo_disponible <= 0) {
@@ -107,6 +114,7 @@ function crearEntrada($entrada, $nombre, $apellidos, $dni, $email, $idGrupo, $ne
     global $app;
     global $log;
 
+ /*
     $query = "SELECT precio_ant,precio_comision,printathome FROM conciertos c, conciertos_descripcion cd, salas s
 							WHERE cd.id_conciertos=c.id_conciertos AND cd.idioma ='cas'
 							AND c.id_sala = s.id_sala
@@ -115,9 +123,15 @@ function crearEntrada($entrada, $nombre, $apellidos, $dni, $email, $idGrupo, $ne
 							AND c.entrada_inet = 1
 							AND c.num_entradas > 0
 							AND c.id_conciertos =" . $idGrupo;
+*/
 
-
-
+    $query = "SELECT precio_ant,precio_comision,printathome FROM conciertos c, conciertos_descripcion cd, salas s
+							WHERE cd.id_conciertos=c.id_conciertos AND cd.idioma ='cas'
+							AND c.id_sala = s.id_sala
+							AND c.visible = 'Si'
+							AND c.entrada_inet = 1
+							AND c.num_entradas > 0
+							AND c.id_conciertos =" . $idGrupo;
 
     $grupo_disponible = $database->num_rows($query);
 
@@ -193,6 +207,24 @@ function insertarEntrada($entrada)
 	$printathome	= $entrada->show_item('printathome');
 
 
+
+    $entrada_output = array(
+        "MerchantID"=>$MerchantID,
+        "AcquirerBIN"=>$AcquirerBIN,
+        "TerminalID"=>$AcquirerBIN,
+        "Num_operacion"=>$Num_operacion,
+        "Importe"=>$Importe,
+        "TipoMoneda"=>$Tipomoneda,
+        "Exponente"=>$Exponente,
+        "URL_OK"=>$Exponente,
+        "Cifrado"=>"SHA1",
+        "URL_NOK"=>$URL_NOK,
+        "Firma"=>$resultado,
+        "Idioma"=>1,
+        "Pago_soportado"=>"SSL",
+
+);
+
     $entrada_values = array(
         'num_operacion' => $Num_operacion,
         'nombre' =>$nombreCompleto, //Random thing to insert
@@ -216,7 +248,14 @@ function insertarEntrada($entrada)
         $app->stop();
 
     }
-
+    else
+    {
+        $response["error"] = false;
+        $response["message"] = "La entrada esta validada";
+        $response["entrada"] = array();
+        $response["entrada"] = $entrada_output;
+        helper::echoResponse(200, $response);
+    }
     # Vaciamos la entrada
 
 
