@@ -10,7 +10,7 @@
 
 class sEntrada
 {
-    var $id;
+    var $id_conciertos;
     var $grupos;
     var $nombre;
     var $apellidos;
@@ -30,9 +30,9 @@ class sEntrada
         $this->_init();
     }
 
-    function add_item($id,$grupos,$nombre,$apellidos,$dni,$email,$nentradas,$precio,$comision,$printathome,$estado="KO")
+    function add_item($id_conciertos,$grupos,$nombre,$apellidos,$dni,$email,$nentradas,$precio,$comision,$printathome,$estado="KO")
     {
-        $this->id	     = $id;
+        $this->id_conciertos    = $id_conciertos;
         $this->grupos	 = $grupos;
         $this->nombre    = $nombre;
         $this->apellidos = $apellidos;
@@ -58,7 +58,7 @@ class sEntrada
 
     function _init()
     {
-        $this->id   	 = null;
+        $this->id_conciertos   	 = null;
         $this->grupos    = "";
         $this->nombre    = "";
         $this->apellidos = "";

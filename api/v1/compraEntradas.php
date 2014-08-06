@@ -8,7 +8,7 @@ function is_ajax()
     return isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest';
 }
 
-function validarGrupo($idGroup)
+function validarConcierto($id_conciertos)
 {
     global $database;
     global $app;
@@ -27,10 +27,10 @@ function validarGrupo($idGroup)
 							AND c.visible = 'Si'
 							AND c.entrada_inet = 1
 							AND c.num_entradas > 0
-							AND c.id_conciertos =" . $idGroup;
+							AND c.id_conciertos =" . $id_conciertos;
 
-    $grupo_disponible = $database->num_rows($query);
-    if ($grupo_disponible <= 0) {
+    $concierto_exists = $database->num_rows($query);
+    if ($concierto_exists <= 0) {
         $response["error"] = true;
         $response["message"] = "El grupo no actua en esas fechas";
         helper::echoResponse(500, $response);
@@ -104,7 +104,7 @@ function validarDatosEntrada($entrada)
 }
 
 
-function crearEntrada($entrada, $nombre, $apellidos, $dni, $email, $idGrupo, $nentradas, $grupos)
+function crearEntrada($entrada, $nombre, $apellidos, $dni, $email, $id_conciertos, $nentradas, $grupos)
 {
 
     $grupo_sin_espacios = str_replace(" ", "", $grupos);
@@ -131,7 +131,7 @@ function crearEntrada($entrada, $nombre, $apellidos, $dni, $email, $idGrupo, $ne
 							AND c.visible = 'Si'
 							AND c.entrada_inet = 1
 							AND c.num_entradas > 0
-							AND c.id_conciertos =" . $idGrupo;
+							AND c.id_conciertos =" . $id_conciertos;
 
     $grupo_disponible = $database->num_rows($query);
 
@@ -142,7 +142,7 @@ function crearEntrada($entrada, $nombre, $apellidos, $dni, $email, $idGrupo, $ne
         $precio_comision = $row[1];
         $printathome = $row[2];
 
-        $entrada->add_item($idGrupo,
+        $entrada->add_item($id_conciertos,
             $grupo_sin_espacios,
             strip_tags(helper::sql_quote($nombre)),
             strip_tags(helper::sql_quote($apellidos)),
@@ -178,7 +178,7 @@ function insertarEntrada($entrada)
     $amount = $entrada->show_item("importe") * 100;
 
 			// Generaci�n del numero de pedido:
-	$xidconcierto = $entrada->show_item("id");
+	$xidconcierto = $entrada->show_item("id_conciertos");
 	$xmes = date('m');
 	$xdia = date('d');
 	$xfecha = date('ymdHis');
@@ -203,7 +203,7 @@ function insertarEntrada($entrada)
 	$dni 			= $entrada->show_item('dni');
 	$email 			= $entrada->show_item('email');
 	$nentradas 		= $entrada->show_item('nentradas');
-	$id 			= $entrada->show_item('id');
+    $id_conciertos 			= $entrada->show_item('id_conciertos');
 	$printathome	= $entrada->show_item('printathome');
 
 
@@ -233,7 +233,7 @@ function insertarEntrada($entrada)
         'dni' =>$dni, //Random thing to insert
         'email' =>$email, //Random thing to insert
         'nentradas' =>$nentradas, //Random thing to insert
-        'id_conciertos' => $id,
+        'id_conciertos' => $id_conciertos,
         'codigo_fecha_entradas' => $fechaActual,
         'confirmada' =>'0',
         'printathome' => $printathome

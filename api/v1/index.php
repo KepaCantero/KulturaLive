@@ -71,7 +71,7 @@ $app->post('/verifyTicket', function () use ($app) {
     // check for required params
     global $database;
 
-    verifyRequiredParams(array('nombre', 'apellidos', 'dni', 'email','nentradas', 'idGrupo','grupos'));
+    verifyRequiredParams(array('nombre', 'apellidos', 'dni', 'email','nentradas', 'id_conciertos','grupos'));
 
     $response = array();
 
@@ -81,7 +81,7 @@ $app->post('/verifyTicket', function () use ($app) {
     $apellidos = $database->filter($app->request->post("apellidos"));
     $email = $database->filter($app->request->post('email'));
     $nombre = $database->filter($app->request->post("nombre"));
-    $idGrupo = $database->filter($app->request->post("idGrupo"));
+    $id_conciertos = $database->filter($app->request->post("id_conciertos"));
     $nentradas = $database->filter($app->request->post("nentradas"));
     $grupos = $database->filter($app->request->post("grupos"));
 
@@ -89,25 +89,25 @@ $app->post('/verifyTicket', function () use ($app) {
 
     $entrada = new sEntrada();
 
-    crearEntrada($entrada, $nombre, $apellidos, $dni, $email, $idGrupo, $nentradas, $grupos);
+    crearEntrada($entrada, $nombre, $apellidos, $dni, $email, $id_conciertos, $nentradas, $grupos);
 
     validarDatosEntrada($entrada);
-    validarGrupo($idGrupo);
-    validarEntradaDisponibles($entrada->show_item("id"), $entrada->show_item("nentradas"));
+    validarConcierto($id_conciertos);
+    validarEntradaDisponibles($entrada->show_item("id_conciertos"), $entrada->show_item("nentradas"));
     insertarEntrada($entrada);
 
 
 });
 
 
-$app->get('/getConcertDetails/:id/', function ($id) use ($app) {
+$app->get('/getConcertDetails/:id_conciertos/', function ($id_conciertos) use ($app) {
 
     global $database;
     global $log;
 
     try {
 
-        $query = "SELECT id_conciertos,grupos,nombre_sala,codigo_fecha,precio_ant,precio_taq,imagen FROM conciertos c INNER JOIN salas s ON c.id_sala = s.id_sala WHERE id_conciertos = " .$id;
+        $query = "SELECT id_conciertos,grupos,nombre_sala,codigo_fecha,precio_ant,precio_taq,imagen FROM conciertos c INNER JOIN salas s ON c.id_sala = s.id_sala WHERE id_conciertos = " .$id_conciertos;
 
         $response["error"] = false;
         $response["concert"] = array();
