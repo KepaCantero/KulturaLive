@@ -1,4 +1,4 @@
-var userFormView = function(template) {
+var SalaDetalleView = function(template, sala) {
 
     this.initialize = function() {
         this.el = $('<div/>');
@@ -6,11 +6,10 @@ var userFormView = function(template) {
         this.el.on('click', '.back-button', function() {
 			history.go(-1);
 		});
-				
     };
 
     this.render = function() {
-        this.el.html(template);
+        this.el.html(template(sala));
         return this;
     };
 

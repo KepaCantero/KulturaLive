@@ -84,7 +84,7 @@
 			var concertsList = /^#mainMenu\/concertsList/;
 			var mainMenuURL = /^#mainMenu/;
 			var userForm = /^#mainMenu\/userForm/;
-			var ticketDetails = /^#mainMenu\/ticketDetails/;
+			var ticketDetails = /^#mainMenu\/ticketDetails\/(\d{1,})/;
             var listadoSalas = /^#mainMenu\/salas/;
             var detalleSalas = /^#mainMenu\/salas\/(\d{1,})/;
             
@@ -107,14 +107,13 @@
 			    controller.LoadDetalleAnuncio();
 				return;
 			}
-            
-            /*var match = hash.match(dummySalaURL);
+            var match = hash.match(ticketDetails);
 			if (match) {
-				console.log("toDummySala");
-			    controller.LoadDummySala();
+				console.log("toTicketDetails");
+				var band = $("#myDivId").val();
+				controller.LoadTicketDetails(match[1]);
 				return;
-			}*/
-            
+			}
             var match = hash.match(detalleSalas);
 			if (match) {
 				console.log("todetalleSalas");
@@ -129,13 +128,7 @@
 				return;
 			}
 			
-            var match = hash.match(ticketDetails);
-			if (match) {
-				console.log("toTicketDetails");
-				var band = $("#myDivId").val();
-				controller.LoadTicketDetails(band);
-				return;
-			}
+            
 
 			var match = hash.match(dummyURL);
 			if (match) {

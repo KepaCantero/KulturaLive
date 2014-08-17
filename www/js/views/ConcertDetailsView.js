@@ -6,6 +6,14 @@ var ConcertDetailsView = function(template, concert) {
       	this.el.on('click', '.back-button', function() {
 			history.go(-1);
 		});
+		
+		this.el.on('click', '.back-button', function() {
+			history.go(-1);
+		});
+		
+		this.el.on('click', '#butComprarEntrada', function() {
+			
+		});
     };
 
     this.render = function() {

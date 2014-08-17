@@ -25,11 +25,14 @@
 			</div>
 			
 			<div id="initialPage">				
+				
 				<a class="btn_a" href="#mainMenu/concertsList/" >ENTRADAS</a>
 				<a class="btn_s" href="#mainMenu/salas" >SALAS</a>
 				<a class="btn_c" href="#mainMenu/dummy" >INFO</a>
-			</div>
+				<!--<button id="buttonPrueba" class="topcoat-button--cta">COMPRAR</button>-->
 				
+			</div>
+           				
 		</script>
 		
 
@@ -55,7 +58,7 @@
           		</div>
 	        </div>
 			
-			<nav class="side-nav">
+			<!--<nav class="side-nav">
                 <div class="topcoat-list__container side-nav__list__container">
 				   	
 				   	<div class="nav-item">
@@ -81,13 +84,13 @@
 					</div>
 					
             	</div>
-            </nav>
+            </nav>-->
             
                             
     		<div class="main-content content-conciertos">				
 			    <div id="busquedaConciertos">
 			    	<div id="boxBusqueda">
-			    		<input id="inputBusqConciertos" class="topcoat-text-input" type="text" placeholder="Búsqueda"></input>
+			    		<input id="inputBusqConciertos" class="topcoat-text-input" type="text" placeholder="Bï¿½squeda"></input>
 		    			<button id="butBusqConciertos" class="topcoat-icon-button"> > </button>
 	    			</div>
 			    </div>
@@ -225,23 +228,24 @@
 					<div class="detailImageBox">
 						{{#if imagen}}
 							<div class="detail-image">
-								<img src="http://kometa.esy.es/subidas/imagenes/conciertos/{{imagen}}">
+								<img class="imgDetalle" src="http://kometa.esy.es/subidas/imagenes/conciertos/{{imagen}}">
 							</div>
 						{{else}}
 							<div class="detail-image">
-								<img src="assets/pics/no_disponible.jpg">
+								<img class="imgDetalle" src="assets/pics/no_disponible.jpg">
 							</div>
 						{{/if}}
 					</div>
 	
-					<div id="myDivId" class="detailBand">{{grupos}}</div>				
+					<div id="idConcert1" class="detailBand">{{grupos}}</div>				
+					<div id="gruposConcert1" style="visibility: hidden">{{id_conciertos}} </div>
 					<div class="detailSala">{{nombre_sala}}</div>
 					<div class="detailDate">{{nuevaFecha}}</div>
 					<div class="detailHour">{{hora}}</div>
 					<div class="detailHour">{{precio_ant}} euros (antic.)</div>
 					<div class="detailHour">{{precio_taq}} euros (taquilla)</div>		
 					<div class="detail-image">
-						<a class="topcoat-button--cta" href="#mainMenu/ticketDetails" >COMPRAR ENTRADA</a>
+						<a id="butComprarEntrada" class="topcoat-button--cta" href="#mainMenu/ticketDetails/{{id_conciertos}}" >COMPRAR ENTRADA</a>
 					</div>		
 				</div>
 			</div>
@@ -369,34 +373,67 @@
 			<div class="main-content">
 				<div class="divFondo">
 					<div id="formBox">
-						<form>
-							{{#if name}}		
-								<div class="form-item centerItem">	
-									<input type="text" class="topcoat-text-input" placeholder="text" value={{name}}>
-								</div>
-							{{else}}
-								<div class="form-item centerItem">
-									<input type="text" class="topcoat-text-input" placeholder="text" value="Introduce tu nombre">
-								</div>
-							{{/if}}
-				
-							{{#if email}}
-								<div class="form-item centerItem">
-									<input type="text" class="topcoat-text-input" placeholder="text" value={{email}}>
-								</div>
-							{{else}}
-								<div class="form-item centerItem">
-									<input type="text" class="topcoat-text-input" placeholder="text" value="Introduce tu email">
-								</div>
-								<div class="form-item centerItem">
-									<input type="text" class="topcoat-text-input" placeholder="text" value="Repite tu email ">
-								</div>
-							{{/if}}					
+						<div id="gruposConcert" class="detailBand">{{grupos}}</div>				
+					    <div id="idConcert" style="visibility: hidden">{{id_conciertos}} </div>
+					    <div class="detailSala">{{nombre_sala}}</div>
+					    <div class="detailDate">{{nuevaFecha}}</div>
+					    <div class="detailHour">{{hora}}</div>
+                            
+						<form>		
+							<div class="form-item centerItem">	
+								<input id="inputNombre" type="text" class="topcoat-text-input" placeholder="text" value="Mikel">
+							</div>
+							<div class="form-item centerItem">
+								<input id="inputApellidos" type="text" class="topcoat-text-input" placeholder="text" value="Perez Hernandez">
+							</div>
+							<div class="form-item centerItem">
+								<input id="inputEmail" type="text" class="topcoat-text-input" placeholder="text" value="karle.xaw@gmail.com">
+							</div>	
+							<div class="form-item centerItem">
+								<input id="inputDni" type="text" class="topcoat-text-input" placeholder="text" value="30687503Y">
+							</div>	
+							<div class="form-item centerItem">
+								<select id="inputNentradas" class="topcoat-select">
+									<option value="1">1</option>
+									<option value="2">2</option>
+									<option value="3">3</option>
+									<option value="4">4</option>
+									<option value="5">5</option>
+									<option value="6">6</option>
+									<option value="7">7</option>
+									<option value="8">8</option>
+									<option value="9">9</option>
+									<option value="10">10</option>
+								</select>
+							</div>											
 						</form>
+		
+						<!--<form id="formulario" action="http://tpv.ceca.es:8000/cgi-bin/tpv" ENCTYPE="application/x-www-form-urlencoded" name="compra" method="post" target="_self">--></form>
+						<form id="formulario" action="https://pgw.ceca.es/cgi-bin/tpv" ENCTYPE="application/x-www-form-urlencoded" name="compra" method="post" target="myWindow">
+							
+                            
+                            
+                            
+							<input id="inputMerchantID" name="MerchantID" type=hidden value="">
+							<input id="inputAcquirerBIN" name="AcquirerBIN" type=hidden value="">
+							<input id="inputTerminalID" name="TerminalID" type=hidden value="">
+							<input id="inputNumOperacion" name="Num_operacion" type=hidden value="">
+							<input id="inputImporte" name="Importe" type=hidden value="">
+							<input id="inputTipoMoneda" name="TipoMoneda" type=hidden value="">
+							<input id="inputExponente" name="Exponente" type=hidden value="">
+							<input id="inputURLOK" name="URL_OK" type=hidden value="">
+							<INPUT id="inputCifrado" NAME="Cifrado" TYPE=hidden VALUE="">
+							<input id="inputURLNOK" name="URL_NOK" type=hidden value="">
+							<input id="inputFirma" name="Firma" type=hidden value="">
+							<input id="inputIdioma" name="Idioma" type=hidden value="">
+							<input id="inputPagoSoportado" name="Pago_soportado" type=hidden value="">
+							<!--<input id="submitPago" type="submit" class="topcoat-button--cta" value="PAGAR">-->
+						</form>
+						
 					</div>
 					
 					<div class="form-item centerItem">
-						<button class="topcoat-button--cta" >COMPRAR</button>
+						<button id="buttonUserForm" class="topcoat-button--cta" >COMPRAR</button>
 					</div>
 				
 				</div>
