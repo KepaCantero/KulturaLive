@@ -1,16 +1,17 @@
-var ListSalasView = function(template, listItemTemplate) {
+var salasListView = function(template, listItemTemplate) {
 
 	this.initialize = function() {
 		// Define a div wrapper for the view. The div wrapper is used to attach events.
 		this.el = $('<div/>');
-		var cuerpo = $('#home2');
+		var cuerpo = $('#home');
 
-		//Esto hace que al cambiar de página se vaya a la parte de arriba.
+		//Esto hace que al cambiar de pï¿½gina se vaya a la parte de arriba.
 		window.scrollTo(0, 0);
 		//$('html,body').scrollTop(0);
 
 		this.el.on('click', '.back-button', function(event) {
-			window.history.back();
+			//window.history.back();
+			history.go(-1);
 		});
 	};
 

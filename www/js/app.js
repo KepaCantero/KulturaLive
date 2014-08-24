@@ -3,10 +3,8 @@
 
 		/* ---------------------------------- Local Variables ---------------------------------- */
 
-		var detailsURL = /^#concerts\/(\d{1,})/;
-		var mainConcertsList = /^#mainConcertsList\//;
-		var controller = new Controller();
-		var mainMenuURL = "#mainMenu";
+	    var controller = new Controller();
+	
         
 		//var router= new Route();
 
@@ -19,6 +17,7 @@
         });
 
         function onDeviceReady() {
+            
             FastClick.attach(document.body);
             window.location.hash = "#mainMenu";
            
@@ -47,29 +46,16 @@
                         
            });*/
             
+            
             controller.initialize().done(function() {
 			    window.location.hash = "#mainMenu";
 		    	route();    
             });
 
-            //document.addEventListener('backbutton', backButtonCallback, true);
         };
 		        
-		$(window).on('hashchange', route);   
-        
-		/*$(window).scroll(function() {
-			if ($(window).scrollTop() >= $(document).height() - $(window).height() - 10) {
-				console.log("Scrolling");*/
-                
-				//controller.InsertFromAjax();
-                /*controller.from = controller.from + controller.count;
-				controller.InsertFromDB(controller.from,controller.count);*/
-				/*controller.InsertFromDB(0,10);
-                
-			}
-		});*/
-
-		
+		$(window).on('hashchange', route);          
+	
 
 		/* ---------------------------------- Local Functions ---------------------------------- */
 
@@ -80,19 +66,21 @@
 			var hash = window.location.hash;
 	        var dummyURL = /^#mainMenu\/dummy/;
 			var dummySalaURL = /^#sala\/dummy/;
-			var detailsURL = /^#mainMenu\/concertsList\/(\d{1,})/;
+			
 			var concertsList = /^#mainMenu\/concertsList/;
-			var mainMenuURL = /^#mainMenu/;
-			var userForm = /^#mainMenu\/userForm/;
-			var ticketDetails = /^#mainMenu\/ticketDetails\/(\d{1,})/;
-            var listadoSalas = /^#mainMenu\/salas/;
-            var detalleSalas = /^#mainMenu\/salas\/(\d{1,})/;
+			var concertDetails = /^#mainMenu\/concertDetails\/(\d{1,})/;
             
-			var dummyDetallesAnuncio = /^#mainMenu\/detallesAnuncio/;
+            var mainMenuURL = /^#mainMenu/;
+			
+			
+            var salasList = /^#mainMenu\/salas/;
+            var salaDetails = /^#mainMenu\/salas\/(\d{1,})/;
+            
+			var adsDetails = /^#mainMenu\/detallesAnuncio/;
 			
 			//Esto sirve para que siempre se cierre el men� lateral aunque se d� a back estando abierto
 			$('.side-nav').css("display", "none");
-			$('#home2').removeClass('left-nav');
+			$('#home').removeClass('left-nav');
 			
 			//Esto hace que al cambiar de p�gina se vaya a la parte de arriba.
 			window.scrollTo(0, 0);
@@ -101,69 +89,59 @@
             console.log("hash: " + hash);
 			// Ojo que entra en la primera que encuentra un match.
  
-			var match = hash.match(dummyDetallesAnuncio);
+			var match = hash.match(adsDetails);
             if (match) {
-				console.log("toDummySala");
-			    controller.LoadDetalleAnuncio();
-				return;
-			}
-            var match = hash.match(ticketDetails);
-			if (match) {
-				console.log("toTicketDetails");
-				var band = $("#myDivId").val();
-				controller.LoadTicketDetails(match[1]);
-				return;
-			}
-            var match = hash.match(detalleSalas);
-			if (match) {
-				console.log("todetalleSalas");
-			    controller.LoadDetalleSala(match[1]);
-				return;
-			}
-            
-            var match = hash.match(listadoSalas);
-			if (match) {
-				console.log("tolistadoSalas");
-			    controller.LoadAllSalas();
+				//console.log("toDummySala");
+			    controller.LoadAdsDetails();
 				return;
 			}
 			
+			var match = hash.match(concertDetails);
+			if (match) {
+				
+				var band = $("#myDivId").val();
+				controller.LoadConcertDetails(match[1]);
+				return;
+			}
             
+            var match = hash.match(salaDetails);
+			if (match) {
+				//console.log("todetalleSalas");
+			    controller.LoadSalaDetails(match[1]);
+				return;
+			}
+            
+            var match = hash.match(salasList);
+			if (match) {
+				//console.log("tolistadoSalas");
+			    controller.LoadSalasList();
+				return;
+			}
+			
 
 			var match = hash.match(dummyURL);
 			if (match) {
-				console.log("toDummyUrl");
+				//console.log("toDummyUrl");
 				controller.LoadDummy();
 				return;
 			}
 
-			var match = hash.match(detailsURL);
-			if (match) {
-				console.log("todetailsURL");
-				controller.LoadConcert(match[1]);
-				return;
-			}
-
+			
 			var match = hash.match(concertsList);
 			if (match) {
-				console.log("toLoadAllConcert");
-				controller.LoadAllConcerts();
+				//console.log("toLoadAllConcert");
+				controller.LoadConcertsList();
 				return;
 			}
 
-			var match = hash.match(userForm);
-			if (match) {
-				console.log("touserForm");
-				controller.LoadUserForm();
-				return;
-			}
 
 			var match = hash.match(mainMenuURL);
 			if (match) {
-				console.log("tomainMenuURL");
+				//console.log("tomainMenuURL");
 				controller.LoadMainMenu();
 				return;
 			}
 		}
   
 	})(window,document,window.jQuery); 
+	

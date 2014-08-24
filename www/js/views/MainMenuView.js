@@ -6,7 +6,7 @@ var MainMenuView = function ( template) {
         this.el.on('click', '#submitPago', function() {
 			//$('#formCeca').submit();
 			
-			var url = 'http://tpv.ceca.es:8000/cgi-bin/tpv/?';
+			/*var url = 'http://tpv.ceca.es:8000/cgi-bin/tpv/?';
 			url += 'MerchantID=012130696&';
 			url += 'AcquirerBIN=0000554053&';
 			url += 'TerminalID=00000003&';
@@ -19,15 +19,14 @@ var MainMenuView = function ( template) {
 			url += 'URL_NOK=http://www.kulturalive.com/index.php?len=cas&';
 			url += 'Firma=59a452ac795aa6e60ad02e7189e676c5a5ca9bfb&';
 			url += 'Idioma=1&';
-			url += 'Pago_soportado=SSL';
+			url += 'Pago_soportado=SSL';*/
 			
-			var ref = window.open(encodeURI(url), '_blank', 'location=yes,closebuttoncaption=Cerrar');
-
-            //var ref = window.open(encodeURI('http://www.google.com'), '_blank', 'location=yes');
+			//var ref = window.open(encodeURI(url), '_blank', 'location=yes,closebuttoncaption=Cerrar');
+			var ref = window.open(encodeURI('http://www.google.com'), '_blank', 'location=yes');
 			
-         	ref.addEventListener('loadstart', function(event) { 
+         	/*ref.addEventListener('loadstart', function(event) { 
          		console.log(event.url); 
-     		});
+     		});*/
 			
 		});
     };

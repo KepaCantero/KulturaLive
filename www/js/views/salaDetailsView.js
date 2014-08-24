@@ -1,4 +1,4 @@
-var SalaDetalleView = function(template, sala) {
+var salaDetailsView = function(template, sala) {
 
     this.initialize = function() {
         this.el = $('<div/>');

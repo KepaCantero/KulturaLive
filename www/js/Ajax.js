@@ -15,7 +15,7 @@ var Ajax = function ()
         
     this.getMovies = function () {
        var deferred = $.Deferred();
-        console.log("ajax call: getMovies");
+        //console.log("ajax call: getMovies");
         $.jsonp({
                 url: 'http://api.rottentomatoes.com/api/public/v1.0/' + 'lists/dvds/current_releases.json',
                 data: {
@@ -24,7 +24,7 @@ var Ajax = function ()
                     apikey: 'xugmssra9wqy3c6vqwh2cam8',
                     itemsPerPage:10,
                     beforeSend: function () {
-                        console.log("beforeSend");
+                        //console.log("beforeSend");
                         $('#loading').html('<img src="assets/images/preLoader.gif"> loading...');
                         $('#loading').center();
                         $('#loading').show();
@@ -34,7 +34,7 @@ var Ajax = function ()
             })
             .pipe(function(data) {
                 
-                console.log("llamada correcta");
+                //console.log("llamada correcta");
                 for (var i = 0; i < 10; i++) {
                 	concerts[i].id = i + 1;
                     concerts[i].bandName = data.movies[i].title;
